@@ -38,12 +38,12 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <TableView layoutX="27.0" layoutY="97.0" prefHeight="280.0" prefWidth="550.0">
+      <TableView fx:id="partsTableView" layoutX="27.0" layoutY="97.0" prefHeight="280.0" prefWidth="550.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="ID" />
-          <TableColumn prefWidth="138.0" text="Part  Name" />
-            <TableColumn prefWidth="102.0" text="Inventory Level" />
-            <TableColumn prefWidth="164.0" text="Price / Cost Per Unit" />
+          <TableColumn fx:id="partIDColumn" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="partNameColumn" prefWidth="138.0" text="Part  Name" />
+            <TableColumn fx:id="inventoryLevelColumn" prefWidth="102.0" text="Inventory Level" />
+            <TableColumn fx:id="priceColumn" prefWidth="164.0" text="Price / Cost Per Unit" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" layoutX="402.0" layoutY="381.0" prefHeight="54.0" prefWidth="174.0" spacing="10.0">

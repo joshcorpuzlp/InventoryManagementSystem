@@ -1,3 +1,5 @@
+package sample;
+
 import javafx.beans.property.SimpleStringProperty;
 
 public class Parts {
@@ -5,8 +7,14 @@ public class Parts {
     private SimpleStringProperty partName;
     private int partInventoryLevel, maxInventory, minInventory;
     private double price;
-    private int machineID;
-    private SimpleStringProperty companyName;
+
+    public Parts(int id, String partName, int partInventoryLevel, double price) {
+        setId(id);
+        setPartName(partName);
+        setPartInventoryLevel(partInventoryLevel);
+        setPrice(price);
+    }
+
 
     public int getId() {
         return id;
@@ -21,7 +29,7 @@ public class Parts {
     }
 
     public void setPartName(String partName) {
-        this.partName.set(partName);
+        this.partName = new SimpleStringProperty(partName);
     }
 
     public int getPartInventoryLevel() {
@@ -56,20 +64,4 @@ public class Parts {
         this.price = price;
     }
 
-    public int getMachineID() {
-        return machineID;
-    }
-
-    public void setMachineID(int machineID) {
-        this.machineID = machineID;
-    }
-
-    public String getCompanyName() {
-        return companyName.get();
-    }
-
-
-    public void setCompanyName(String companyName) {
-        this.companyName.set(companyName);
-    }
 }
