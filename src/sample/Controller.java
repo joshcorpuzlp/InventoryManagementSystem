@@ -92,7 +92,6 @@ public class Controller implements Initializable {
 
         ObservableList<Parts> foundParts = searchByPartName(searchInput);
         partsTableView.setItems(foundParts);
-        System.out.println("Searching");
         searchField.setText("");
 
     }
