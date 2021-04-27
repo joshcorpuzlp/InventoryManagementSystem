@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +9,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Parts;
+import model.inHousePart;
+import model.outsourcePart;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

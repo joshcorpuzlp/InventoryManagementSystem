@@ -1,5 +1,7 @@
-package sample;
+package model;
 
+
+import model.Parts;
 
 public class inHousePart extends Parts {
     private int machineID;

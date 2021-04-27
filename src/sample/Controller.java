@@ -12,10 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Parts;
+import model.inHousePart;
+
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -23,7 +24,7 @@ public class Controller implements Initializable {
     //these will configure the PartsTableView
     @FXML private TableView<Parts> partsTableView;
     //creates an initial observable list of Parts class
-    private static ObservableList<Parts> initialParts = FXCollections.observableArrayList();
+    private static ObservableList<Parts> allParts = FXCollections.observableArrayList();
 
     @FXML private TableColumn<Parts, String> partIDColumn;
     @FXML private TableColumn<Parts, String> partNameColumn;
@@ -32,23 +33,19 @@ public class Controller implements Initializable {
 
     //configure the Add Part button
     @FXML private Button AddPartButton;
-    public static ObservableList<Parts> currList;
+
 
     //configure the search field
     @FXML private TextField searchField;
+
+    //configure boolean flag variable to prevent setTestData to run more than once
+    private static boolean isFirstTime = true;
 
 
     /**
      * Constuctor
      */
     public Controller(){
-       // adds new Parts objects
-        initialParts.add(new inHousePart("Screws", 10, 10.99, 0001));
-        initialParts.add(new inHousePart("Nails", 10, 10.99, 0002));
-        initialParts.add(new inHousePart("Hammer", 10, 10.99,0003));
-
-        //MAJOR BUILD ISSUE! You need to figure out how to have an initial set of data that does not get reinitialized every time we go back to the main Controller
-
     }
 
 
@@ -68,9 +65,20 @@ public class Controller implements Initializable {
 
 
         //adds the Observable List of Parts class into the partsTableView
-        partsTableView.setItems(initialParts);
+        setTestData();
+        partsTableView.setItems(allParts);
+    }
 
 
+    private void setTestData() {
+
+        if (!isFirstTime){
+            return;
+        }
+        isFirstTime = false;
+        allParts.add(new inHousePart("Screws", 10, 10.99, 0001));
+        allParts.add(new inHousePart("Nails", 10, 10.99, 0002));
+        allParts.add(new inHousePart("Hammer", 10, 10.99,0003));
     }
 
 
@@ -78,7 +86,7 @@ public class Controller implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("AddPartWindow.fxml"));
         Scene addPartWindowScene = new Scene(root);
 
-        AddPartWindow.receiveDataset(initialParts);
+        AddPartWindow.receiveDataset(allParts);
 
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(addPartWindowScene);
@@ -98,7 +106,7 @@ public class Controller implements Initializable {
     //search method running in the background as private method
     private ObservableList<Parts> searchByPartName(String searchInput) {
         ObservableList<Parts> foundPartNames = FXCollections.observableArrayList();
-        ObservableList<Parts> allParts = initialParts;
+        ObservableList<Parts> allParts = Controller.allParts;
 
         //conditional statement and boolean variable added to switch between doing an (int) ID search or a (String) partName search.
         boolean isText = true;
@@ -112,7 +120,7 @@ public class Controller implements Initializable {
                 }
 
                 else if (foundParts.getPartName().equals("")) {
-                    foundPartNames = initialParts;
+                    foundPartNames = Controller.allParts;
                 }
             }
         }
@@ -123,7 +131,7 @@ public class Controller implements Initializable {
                 }
 
                 else if (foundParts.getPartName().equals("")) {
-                    foundPartNames = initialParts;
+                    foundPartNames = Controller.allParts;
                 }
             }
         }
