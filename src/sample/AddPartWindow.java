@@ -108,6 +108,7 @@ public class AddPartWindow implements Initializable {
         partSourceGroup = new ToggleGroup();
         this.inHouseButton.setToggleGroup(partSourceGroup);
         this.outSourcedButton.setToggleGroup(partSourceGroup);
+        partSourceGroup.selectToggle(inHouseButton);
 
     }
 }
