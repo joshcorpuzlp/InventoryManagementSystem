@@ -70,7 +70,7 @@ public class Controller implements Initializable {
         partsTableView.setItems(allParts);
     }
 
-
+    //sets the initial data set for the partsTableView, has built in boolean flag that only lets it run once.
     private void setTestData() {
 
         if (!isFirstTime){
@@ -99,6 +99,10 @@ public class Controller implements Initializable {
         int selectedIndex;
         selectedIndex = partsTableView.getSelectionModel().getFocusedIndex();
         allParts.remove(selectedIndex);
+    }
+
+    public void modifyPartButton(ActionEvent actionEvent) throws IOException{
+
     }
 
 
