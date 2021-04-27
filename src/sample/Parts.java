@@ -3,13 +3,16 @@ package sample;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Parts {
+
+    //id field needs to also have a corresponding static int id to keep count of all the inputted items.
     private int id;
+    private static int partCounter = 1;
     private SimpleStringProperty partName;
     private int partInventoryLevel, maxInventory, minInventory;
     private double price;
 
-    public Parts(int id, String partName, int partInventoryLevel, double price) {
-        setId(id);
+    public Parts(String partName, int partInventoryLevel, double price) {
+        this.id = partCounter++;
         setPartName(partName);
         setPartInventoryLevel(partInventoryLevel);
         setPrice(price);

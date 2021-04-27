@@ -38,9 +38,9 @@ public class Controller implements Initializable {
      */
     public Controller(){
        // adds new Parts objects
-//        initialParts.add(new inHousePart(001, "Screws", 10, 10.99, 0001));
-//        initialParts.add(new inHousePart(002, "Nails", 10, 10.99, 0002));
-//        initialParts.add(new inHousePart(003, "Hammer", 10, 10.99,0003));
+//        initialParts.add(new inHousePart("Screws", 10, 10.99, 0001));
+//        initialParts.add(new inHousePart("Nails", 10, 10.99, 0002));
+//        initialParts.add(new inHousePart("Hammer", 10, 10.99,0003));
 
         //MAJOR BUILD ISSUE! You need to figure out how to have an initial set of data that does not get reinitialized every time we go back to the main Controller
 

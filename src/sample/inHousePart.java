@@ -6,14 +6,13 @@ public class inHousePart extends Parts {
 
     /**
      * constructor extends the Parts class with an extra field, "machineID".
-     * @param id
      * @param partName
      * @param partInventoryLevel
      * @param price
      * @param machineID -- this is the added parameter in the constructor.
      */
-    public inHousePart(int id, String partName,int partInventoryLevel, double price, int machineID) {
-        super(id, partName, partInventoryLevel, price);
+    public inHousePart(String partName,int partInventoryLevel, double price, int machineID) {
+        super(partName, partInventoryLevel, price);
         setMachineID(machineID);
     };
 
