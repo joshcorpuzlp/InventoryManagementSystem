@@ -25,6 +25,7 @@ public class AddPartWindow implements Initializable {
     @FXML private TextField maxField;
     @FXML private TextField minField;
     @FXML private TextField machineIDField;
+    @FXML private Label errorMessageLabel;
 
     //needs a static variable that will hold the observablelist inside the part table view
     private static ObservableList<Parts> dataHolder;
@@ -51,6 +52,10 @@ public class AddPartWindow implements Initializable {
             newPart.setMinInventory(Integer.parseInt(minField.getText()));
             //dataHolder is a reference to the ObservableList of Parts from the Controller.java
             dataHolder.add(newPart);
+            if (nameField.getText().isEmpty()) {
+                errorMessageLabel.setText("Please input the part name");
+            }
+
         }
         else {
             String machineIDInput = machineIDField.getText();
@@ -59,6 +64,7 @@ public class AddPartWindow implements Initializable {
             newPart.setMinInventory(Integer.parseInt(minField.getText()));
             //dataHolder is a reference to the ObservableList of Parts from the Controller.java
             dataHolder.add(newPart);
+
         }
 
         //after adding the new part, we need to go back to the main controller
@@ -93,10 +99,12 @@ public class AddPartWindow implements Initializable {
 
     }
 
+
     //Method called after initialization inside the MainController to retrieve the data so that it can be manipulated in the AddPartWindow
     public static void receiveDataset(ObservableList<Parts> currentData) {
         dataHolder = currentData;
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -31,6 +32,9 @@ public class Controller implements Initializable {
     //configure the Add Part button
     @FXML private Button AddPartButton;
     public static ObservableList<Parts> currList;
+
+    //configure the search field
+    @FXML private TextField searchField;
 
 
     /**
@@ -69,9 +73,6 @@ public class Controller implements Initializable {
     }
 
 
-
-
-
     public void addPartButtonPressed(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("AddPartWindow.fxml"));
         Scene addPartWindowScene = new Scene(root);
@@ -82,9 +83,34 @@ public class Controller implements Initializable {
         window.setScene(addPartWindowScene);
         window.show();
 
+    }
 
+    //handler that triggers the searchByPartName method
+    public void resultsHandle(ActionEvent actionEvent) {
+        String searchInput = searchField.getText();
 
+        ObservableList<Parts> foundParts = searchByPartName(searchInput);
+        partsTableView.setItems(foundParts);
+        System.out.println("Searching");
+        searchField.setText("");
 
+    }
+    //search method running in the background as private method
+    private ObservableList<Parts> searchByPartName(String searchInput) {
+        ObservableList<Parts> foundPartNames = FXCollections.observableArrayList();
+        ObservableList<Parts> allParts = partsTableView.getItems();
+
+        for(Parts foundParts : allParts) {
+            if (foundParts.getPartName().contains(searchField.getText())) {
+                foundPartNames.add(foundParts);
+            }
+
+            else if (foundParts.getPartName().equals("")) {
+                foundPartNames = allParts;
+            }
+        }
+
+        return foundPartNames;
     }
 
 
