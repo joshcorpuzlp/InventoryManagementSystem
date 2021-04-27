@@ -95,6 +95,13 @@ public class Controller implements Initializable {
 
     }
 
+    public void deletePartButton(ActionEvent actionEvent) {
+        int selectedIndex;
+        selectedIndex = partsTableView.getSelectionModel().getFocusedIndex();
+        allParts.remove(selectedIndex);
+    }
+
+
     //handler that triggers the searchByPartName method
     public void resultsHandle(ActionEvent actionEvent) {
         String searchInput = searchField.getText();
