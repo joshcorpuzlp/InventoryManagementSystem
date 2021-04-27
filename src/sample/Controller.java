@@ -95,13 +95,31 @@ public class Controller implements Initializable {
 
     }
 
+    //selects the item from the partsTableView and then deletes
     public void deletePartButton(ActionEvent actionEvent) {
         int selectedIndex;
         selectedIndex = partsTableView.getSelectionModel().getFocusedIndex();
         allParts.remove(selectedIndex);
     }
 
-    public void modifyPartButton(ActionEvent actionEvent) throws IOException{
+    public void selectPartToModify(ActionEvent actionEvent) throws IOException {
+        int selectedIndex;
+        selectedIndex = partsTableView.getSelectionModel().getFocusedIndex();
+        modifyPartButton(selectedIndex, actionEvent);
+    }
+
+    private void modifyPartButton(int indexNumber, ActionEvent actionEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("ModifyPartWindow.fxml"));
+        Scene modifyPartWindowScene = new Scene(root);
+
+        ModifyPartWindow.receiveDataset(allParts);
+
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(modifyPartWindowScene);
+        window.show();
+
+        //configures the static int the ModifyPartWindow
+        ModifyPartWindow.setIndexNumber(indexNumber);
 
     }
 
