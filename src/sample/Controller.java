@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -42,9 +43,9 @@ public class Controller implements Initializable {
      */
     public Controller(){
        // adds new Parts objects
-//        initialParts.add(new inHousePart("Screws", 10, 10.99, 0001));
-//        initialParts.add(new inHousePart("Nails", 10, 10.99, 0002));
-//        initialParts.add(new inHousePart("Hammer", 10, 10.99,0003));
+        initialParts.add(new inHousePart("Screws", 10, 10.99, 0001));
+        initialParts.add(new inHousePart("Nails", 10, 10.99, 0002));
+        initialParts.add(new inHousePart("Hammer", 10, 10.99,0003));
 
         //MAJOR BUILD ISSUE! You need to figure out how to have an initial set of data that does not get reinitialized every time we go back to the main Controller
 
@@ -98,17 +99,36 @@ public class Controller implements Initializable {
     //search method running in the background as private method
     private ObservableList<Parts> searchByPartName(String searchInput) {
         ObservableList<Parts> foundPartNames = FXCollections.observableArrayList();
-        ObservableList<Parts> allParts = partsTableView.getItems();
+        ObservableList<Parts> allParts = initialParts;
 
-        for(Parts foundParts : allParts) {
-            if (foundParts.getPartName().contains(searchField.getText())) {
-                foundPartNames.add(foundParts);
-            }
+        //conditional statement and boolean variable added to switch between doing an (int) ID search or a (String) partName search.
+        boolean isText = true;
+        if (searchInput.matches(".*\\d.*")) {
+            isText = false;
+        }
+        if (isText) {
+            for(Parts foundParts : allParts) {
+                if (foundParts.getPartName().contains(searchField.getText())) {
+                    foundPartNames.add(foundParts);
+                }
 
-            else if (foundParts.getPartName().equals("")) {
-                foundPartNames = allParts;
+                else if (foundParts.getPartName().equals("")) {
+                    foundPartNames = initialParts;
+                }
             }
         }
+        else {
+            for(Parts foundParts : allParts) {
+                if (foundParts.getId() == Integer.parseInt(searchField.getText())) {
+                    foundPartNames.add(foundParts);
+                }
+
+                else if (foundParts.getPartName().equals("")) {
+                    foundPartNames = initialParts;
+                }
+            }
+        }
+
 
         return foundPartNames;
     }
