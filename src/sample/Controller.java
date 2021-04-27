@@ -17,6 +17,7 @@ import model.inHousePart;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -115,7 +116,8 @@ public class Controller implements Initializable {
         }
         if (isText) {
             for(Parts foundParts : allParts) {
-                if (foundParts.getPartName().contains(searchField.getText())) {
+                //conditional statement makes both the searchInput string and the partName String lowerCase so that it can disregard capitalization
+                if (foundParts.getPartName().toLowerCase(Locale.ROOT).contains(searchField.getText().toLowerCase(Locale.ROOT))) {
                     foundPartNames.add(foundParts);
                 }
 
