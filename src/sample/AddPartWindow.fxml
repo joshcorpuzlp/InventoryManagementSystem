@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.AddPartWindow">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddPartWindow">
    <children>
       <GridPane layoutX="32.0" layoutY="57.0" prefHeight="209.0" prefWidth="234.0">
          <columnConstraints>
@@ -76,5 +76,6 @@
             <Button mnemonicParsing="false" onAction="#cancelNewPart" text="Cancel" />
          </children>
       </HBox>
+      <Label fx:id="errorMessageLabel" layoutX="32.0" layoutY="266.0" prefHeight="121.0" prefWidth="302.0" text="Label" />
    </children>
 </AnchorPane>
