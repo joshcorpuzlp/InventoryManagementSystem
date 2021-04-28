@@ -11,11 +11,13 @@ public class Parts {
     private int partInventoryLevel, maxInventory, minInventory;
     private double price;
 
-    public Parts(String partName, int partInventoryLevel, double price) {
+    public Parts(String partName, int partInventoryLevel, double price, int maxInventory, int minInventory) {
         this.id = partCounter++;
         setPartName(partName);
         setPartInventoryLevel(partInventoryLevel);
         setPrice(price);
+        setMaxInventory(maxInventory);
+        setMinInventory(minInventory);
     }
 
 

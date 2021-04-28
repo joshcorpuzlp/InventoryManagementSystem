@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ModifyPartWindow">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.ModifyPartWindow">
     <children>
         <GridPane layoutX="32.0" layoutY="57.0" prefHeight="209.0" prefWidth="234.0">
             <columnConstraints>
@@ -61,7 +61,7 @@
         </GridPane>
         <HBox alignment="CENTER_LEFT" layoutX="22.0" layoutY="14.0" prefHeight="33.0" prefWidth="335.0" spacing="50.0">
             <children>
-                <Label text="Add Part">
+                <Label text="Modify Part">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -72,7 +72,7 @@
         </HBox>
         <HBox alignment="BOTTOM_RIGHT" layoutX="316.0" layoutY="313.0" prefHeight="33.0" prefWidth="200.0" spacing="25.0">
             <children>
-                <Button mnemonicParsing="false" onAction="#saveNewPart" text="Save" />
+                <Button mnemonicParsing="false" onAction="#saveModifications" text="Save" />
                 <Button mnemonicParsing="false" onAction="#cancelModificationPart" text="Cancel" />
             </children>
         </HBox>

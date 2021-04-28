@@ -1,4 +1,4 @@
-package sample;
+package controller;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Inventory;
 import model.Parts;
 import model.inHousePart;
 import model.outsourcePart;
@@ -29,8 +30,6 @@ public class AddPartWindow implements Initializable {
     @FXML private TextField machineIDField;
     @FXML private Label errorMessageLabel;
 
-    //needs a static variable that will hold the observablelist inside the part table view
-    private static ObservableList<Parts> dataHolder;
 
     //configure the radio buttons
     @FXML private ToggleGroup partSourceGroup;
@@ -43,81 +42,32 @@ public class AddPartWindow implements Initializable {
 
     //Create a method that will add a new part to the tableview with the addpart window
     public void saveNewPart(ActionEvent actionEvent) throws IOException {
-        boolean validInput = false;
         String partNameInput;
         int inventoryInput;
         double priceInput;
         int maxInventoryLevelInput;
         int minInventoryLevelInput;
 
-        String errorMessage = "";
+        //retrieve the inputs
         partNameInput = nameField.getText();
+        inventoryInput = Integer.parseInt(inventoryLevelField.getText());
+        priceInput = Double.parseDouble(priceField.getText());
+        maxInventoryLevelInput = Integer.parseInt(maxField.getText());
+        minInventoryLevelInput = Integer.parseInt(minField.getText());
 
-        //error handling for the inputs THIS SHOULD BE MOVED to ITS OWN METHOD OR METHODS!!!!
-        try {
-            inventoryInput = Integer.parseInt(inventoryLevelField.getText());
-            validInput = true;
-        }
-        catch (Exception exception1) {
-            errorMessage += "Please enter a valid integer for inventory Level\n";
-            inventoryLevelField.setText("");
-            return;
-        }
-
-        try {
-            priceInput = Double.parseDouble(priceField.getText());
-            validInput = true;
-        }
-        catch (Exception exception) {
-            errorMessage += "Please enter a valid integer for inventory Level\n";
-            priceField.setText("");
-            return;
-        }
-
-        try {
-            maxInventoryLevelInput = Integer.parseInt(maxField.getText());
-            validInput = true;
-        }
-        catch (Exception exception) {
-            errorMessage += "Please enter a valid integer for inventory Level\n";
-            maxField.setText("");
-            return;
-        }
-        try {
-            minInventoryLevelInput = Integer.parseInt(minField.getText());
-            validInput = true;
-        }
-        catch (Exception exception) {
-            errorMessage += "Please enter a valid integer for inventory Level";
-            maxField.setText("");
-            return;
-        }
-
-        errorMessageLabel.setText(errorMessage);
-        //create a conditional statement to decide whether to use machineIDInput or companyName input
-        if (isPartInHouse && validInput) {
+        //create a conditional statements to decide whether to use machineIDInput or companyName input
+        if (isPartInHouse) {
             int machineIDInput = Integer.parseInt(machineIDField.getText());
-
-            Parts newPart = new inHousePart(partNameInput, inventoryInput, priceInput, machineIDInput);
-            newPart.setMaxInventory(maxInventoryLevelInput);
-            newPart.setMinInventory(minInventoryLevelInput);
-            //dataHolder is a reference to the ObservableList of Parts from the Controller.java
-            dataHolder.add(newPart);
-
+            Inventory.getAllParts().add(new inHousePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, minInventoryLevelInput, machineIDInput));
         }
-        else if (!isPartInHouse && validInput) {
+
+        else {
             String companyNameInput = machineIDField.getText();
-
-            Parts newPart = new outsourcePart(partNameInput, inventoryInput, priceInput,companyNameInput);
-            newPart.setMaxInventory(maxInventoryLevelInput);
-            newPart.setMinInventory(minInventoryLevelInput);
-            //dataHolder is a reference to the ObservableList of Parts from the Controller.java
-            dataHolder.add(newPart);
-
+            Inventory.getAllParts().add(new outsourcePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, maxInventoryLevelInput, companyNameInput));
         }
 
         //after adding the new part, we need to go back to the main controller
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
         Scene mainControllerScene = new Scene(root);
 
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -129,7 +79,7 @@ public class AddPartWindow implements Initializable {
 
     //create a method for the cancel button -- go back to the main menu without saving
     public void cancelNewPart(ActionEvent actionEvent) throws  IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
         Scene mainControllerScene = new Scene(root);
 
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -137,7 +87,7 @@ public class AddPartWindow implements Initializable {
         window.show();
     }
 
-    //create a method that will change the addPartWindow depending on whether the input is "inhouse" or outsourced?
+    //create a method that will change the addPartWindow depending on whether the input is "inHouse" or outsourced?
     public void inHouseOutSource() {
         if (this.partSourceGroup.getSelectedToggle().equals(this.inHouseButton)) {
             inHouseOutSourcedPrompt.setText("Machine ID");
@@ -147,15 +97,7 @@ public class AddPartWindow implements Initializable {
             inHouseOutSourcedPrompt.setText("Company Name");
             isPartInHouse = false;
         }
-
     }
-
-
-    //Method called after initialization inside the MainController to retrieve the data so that it can be manipulated in the AddPartWindow
-    public static void receiveDataset(ObservableList<Parts> currentData) {
-        dataHolder = currentData;
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
