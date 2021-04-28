@@ -43,27 +43,74 @@ public class AddPartWindow implements Initializable {
 
     //Create a method that will add a new part to the tableview with the addpart window
     public void saveNewPart(ActionEvent actionEvent) throws IOException {
-        int inventoryInput = Integer.parseInt(inventoryLevelField.getText());
-        double priceInput = Double.parseDouble(priceField.getText());
+        boolean validInput = false;
+        String partNameInput;
+        int inventoryInput;
+        double priceInput;
+        int maxInventoryLevelInput;
+        int minInventoryLevelInput;
 
+        String errorMessage = "";
+        partNameInput = nameField.getText();
+
+        //error handling for the inputs THIS SHOULD BE MOVED to ITS OWN METHOD OR METHODS!!!!
+        try {
+            inventoryInput = Integer.parseInt(inventoryLevelField.getText());
+            validInput = true;
+        }
+        catch (Exception exception1) {
+            errorMessage += "Please enter a valid integer for inventory Level\n";
+            inventoryLevelField.setText("");
+            return;
+        }
+
+        try {
+            priceInput = Double.parseDouble(priceField.getText());
+            validInput = true;
+        }
+        catch (Exception exception) {
+            errorMessage += "Please enter a valid integer for inventory Level\n";
+            priceField.setText("");
+            return;
+        }
+
+        try {
+            maxInventoryLevelInput = Integer.parseInt(maxField.getText());
+            validInput = true;
+        }
+        catch (Exception exception) {
+            errorMessage += "Please enter a valid integer for inventory Level\n";
+            maxField.setText("");
+            return;
+        }
+        try {
+            minInventoryLevelInput = Integer.parseInt(minField.getText());
+            validInput = true;
+        }
+        catch (Exception exception) {
+            errorMessage += "Please enter a valid integer for inventory Level";
+            maxField.setText("");
+            return;
+        }
+
+        errorMessageLabel.setText(errorMessage);
         //create a conditional statement to decide whether to use machineIDInput or companyName input
-        if (isPartInHouse) {
+        if (isPartInHouse && validInput) {
             int machineIDInput = Integer.parseInt(machineIDField.getText());
-            Parts newPart = new inHousePart(nameField.getText(), inventoryInput, priceInput, machineIDInput);
-            newPart.setMaxInventory(Integer.parseInt(maxField.getText()));
-            newPart.setMinInventory(Integer.parseInt(minField.getText()));
+
+            Parts newPart = new inHousePart(partNameInput, inventoryInput, priceInput, machineIDInput);
+            newPart.setMaxInventory(maxInventoryLevelInput);
+            newPart.setMinInventory(minInventoryLevelInput);
             //dataHolder is a reference to the ObservableList of Parts from the Controller.java
             dataHolder.add(newPart);
-            if (nameField.getText().isEmpty()) {
-                errorMessageLabel.setText("Please input the part name");
-            }
 
         }
-        else {
-            String machineIDInput = machineIDField.getText();
-            Parts newPart = new outsourcePart(nameField.getText(), inventoryInput, priceInput,machineIDInput);
-            newPart.setMaxInventory(Integer.parseInt(maxField.getText()));
-            newPart.setMinInventory(Integer.parseInt(minField.getText()));
+        else if (!isPartInHouse && validInput) {
+            String companyNameInput = machineIDField.getText();
+
+            Parts newPart = new outsourcePart(partNameInput, inventoryInput, priceInput,companyNameInput);
+            newPart.setMaxInventory(maxInventoryLevelInput);
+            newPart.setMinInventory(minInventoryLevelInput);
             //dataHolder is a reference to the ObservableList of Parts from the Controller.java
             dataHolder.add(newPart);
 
@@ -77,6 +124,8 @@ public class AddPartWindow implements Initializable {
         window.setScene(mainControllerScene);
         window.show();
     }
+
+
 
     //create a method for the cancel button -- go back to the main menu without saving
     public void cancelNewPart(ActionEvent actionEvent) throws  IOException{
