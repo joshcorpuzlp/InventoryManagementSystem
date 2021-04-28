@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,7 +91,9 @@ public class ModifyPartWindow implements Initializable {
 
         Inventory.updatePart(getPartIndexNumber(), updatedInfo);
 
-        Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
+
+        //return to mainMenuWindow
+        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
         Scene mainControllerScene = new Scene(root);
 
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -104,7 +105,7 @@ public class ModifyPartWindow implements Initializable {
 
     //create a method for the cancel button -- go back to the main menu without saving part modification
     public void cancelModificationPart(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
         Scene mainControllerScene = new Scene(root);
 
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

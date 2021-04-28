@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Parts;
@@ -18,11 +19,12 @@ import model.Parts;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static model.Inventory.*;
 
-public class Controller implements Initializable {
+public class mainMenuWindow implements Initializable {
 
     //these will configure the PartsTableView
     @FXML private TableView<Parts> partsTableView;
@@ -44,7 +46,7 @@ public class Controller implements Initializable {
     /**
      * Constuctor
      */
-    public Controller(){
+    public mainMenuWindow(){
     }
 
 
@@ -83,9 +85,44 @@ public class Controller implements Initializable {
 
     //selects the item from the partsTableView and then deletes
     public void deletePartButton(ActionEvent actionEvent) {
-        int selectedIndex;
-        selectedIndex = partsTableView.getSelectionModel().getFocusedIndex();
-        getAllParts().remove(selectedIndex);
+        Parts selectedPart;
+        selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+
+        if (partsTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.NONE);
+            alert.setTitle("Nothing selected");
+            alert.setHeaderText("Nothing selected");
+            alert.setContentText("Nothing was selected to modify");
+            alert.showAndWait();
+        }
+        else {
+            if (getAllParts().size() > 1) {
+                //confirm deletion
+                Parts partToDelete = partsTableView.getSelectionModel().getSelectedItem();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.initModality(Modality.NONE);
+                alert.setTitle("Delete Part");
+                alert.setHeaderText("Deleting Part");
+                alert.setContentText("Are you sure you want to delete " + partToDelete.getPartName() + "?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    deletePart(partToDelete);
+                }
+            }
+            else {
+                //cannot delete the last part
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initModality(Modality.NONE);
+                alert.setTitle("CANNOT DELETE");
+                alert.setHeaderText("CANNOT DELETE");
+                alert.setContentText("This is the last item! Part table cannot be empty.");
+                alert.showAndWait();
+            }
+        }
+
+
+
     }
 
     //method to retrieve the selected Parts object from the table view then calls the modifyPart button

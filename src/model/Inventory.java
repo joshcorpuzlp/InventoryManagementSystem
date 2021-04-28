@@ -20,6 +20,15 @@ public class Inventory {
         allParts.set(index, selectedPart);
     }
 
+    public static void deletePart(Parts part) {
+        for (int i = 0; i < allParts.size(); ++i) {
+            if (part == allParts.get(i))
+            allParts.remove(i);
+            return;
+        }
+
+    }
+
     public static ObservableList<Parts> getAllParts() {
         return allParts;
     }

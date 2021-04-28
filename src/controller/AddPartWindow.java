@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Inventory;
-import model.Parts;
 import model.inHousePart;
 import model.outsourcePart;
 
@@ -67,7 +65,7 @@ public class AddPartWindow implements Initializable {
         }
 
         //after adding the new part, we need to go back to the main controller
-        Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
         Scene mainControllerScene = new Scene(root);
 
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -79,7 +77,7 @@ public class AddPartWindow implements Initializable {
 
     //create a method for the cancel button -- go back to the main menu without saving
     public void cancelNewPart(ActionEvent actionEvent) throws  IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
         Scene mainControllerScene = new Scene(root);
 
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
