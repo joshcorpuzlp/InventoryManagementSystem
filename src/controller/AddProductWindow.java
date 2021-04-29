@@ -55,17 +55,10 @@ public class AddProductWindow implements Initializable {
     @FXML TextField associatedPartSearchField;
 
     //Method that uses an ActionEvent(button press) to show the mainMenu.fxm
-    private void returnToMainMenu(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
-        Scene mainControllerScene = new Scene(root);
 
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(mainControllerScene);
-        window.show();
-    }
 
     public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
-        returnToMainMenu(actionEvent);
+        mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
     public void saveButtonPressed(ActionEvent actionEvent) throws IOException{
@@ -92,9 +85,8 @@ public class AddProductWindow implements Initializable {
             currentProduct.setAssociatedParts(part);
         }
 
-
         //calls the returnToMainMen() method.
-        returnToMainMenu(actionEvent);
+        mainMenuWindow.returnToMainMenu(actionEvent);
 
     }
 

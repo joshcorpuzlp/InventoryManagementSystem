@@ -75,24 +75,14 @@ public class AddPartWindow implements Initializable {
         }
 
         //after adding the new part, we need to go back to the main controller
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
-        Scene mainControllerScene = new Scene(root);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(mainControllerScene);
-        window.show();
+        mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
 
 
     //create a method for the cancel button -- go back to the main menu without saving
     public void cancelNewPart(ActionEvent actionEvent) throws  IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
-        Scene mainControllerScene = new Scene(root);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(mainControllerScene);
-        window.show();
+        mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
     //create a method that will change the addPartWindow depending on whether the input is "inHouse" or outsourced?

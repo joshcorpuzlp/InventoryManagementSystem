@@ -246,9 +246,8 @@ public class mainMenuWindow implements Initializable {
             }
         }
 
-
-
     }
+
     //method triggered by addProduct Button
     public void addProductButtonPressed(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../view/addProductWindow.fxml"));
@@ -273,6 +272,16 @@ public class mainMenuWindow implements Initializable {
         window.setScene(modifyPartWindowScene);
         window.show();
 
+    }
+
+    //method to return to main menu, created to be reusable in other controllers.
+    public static void returnToMainMenu(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(mainMenuWindow.class.getResource("../view/mainMenu.fxml"));
+        Scene mainControllerScene = new Scene(root);
+
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(mainControllerScene);
+        window.show();
     }
 
 

@@ -66,12 +66,7 @@ public class ModifyProductWindow implements Initializable{
 
 
     public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
-        Scene addPartWindowScene = new Scene(root);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(addPartWindowScene);
-        window.show();
+        mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
     public void saveButtonPressed(ActionEvent actionEvent) throws IOException{
@@ -104,12 +99,7 @@ public class ModifyProductWindow implements Initializable{
 
 
         //returns to mainMenuWindow
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
-        Scene mainControllerScene = new Scene(root);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(mainControllerScene);
-        window.show();
+        mainMenuWindow.returnToMainMenu(actionEvent);
 
     }
 
