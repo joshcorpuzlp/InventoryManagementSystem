@@ -26,24 +26,24 @@ import static model.Inventory.searchByPartName;
 
 
 public class AddProductWindow implements Initializable {
-    @FXML TextField productIDField;
-    @FXML TextField productNameField;
-    @FXML TextField inventoryLevelField;
-    @FXML TextField productPriceField;
-    @FXML TextField maxInventoryField;
-    @FXML TextField minInventoryField;
+    @FXML private TextField productIDField;
+    @FXML private TextField productNameField;
+    @FXML private TextField inventoryLevelField;
+    @FXML private TextField productPriceField;
+    @FXML private TextField maxInventoryField;
+    @FXML private TextField minInventoryField;
 
-    @FXML TableView partsTableView;
-    @FXML TableColumn<Parts, String> partIDColumn;
-    @FXML TableColumn<Parts, String> partNameColumn;
-    @FXML TableColumn<Parts, String> partInventoryLevelColumn;
-    @FXML TableColumn<Parts, String> partPriceColumn;
+    @FXML private TableView partsTableView;
+    @FXML private TableColumn<Parts, String> partIDColumn;
+    @FXML private TableColumn<Parts, String> partNameColumn;
+    @FXML private TableColumn<Parts, String> partInventoryLevelColumn;
+    @FXML private TableColumn<Parts, String> partPriceColumn;
 
-    @FXML TableView associatedPartsTableView;
-    @FXML TableColumn<Parts, String> associatedPartIDColumn;
-    @FXML TableColumn<Parts, String> associatedPartNameColumn;
-    @FXML TableColumn<Parts, String> associatedPartInventoryLevelColumn;
-    @FXML TableColumn<Parts, String> associatedPartPriceColumn;
+    @FXML private TableView associatedPartsTableView;
+    @FXML private TableColumn<Parts, String> associatedPartIDColumn;
+    @FXML private TableColumn<Parts, String> associatedPartNameColumn;
+    @FXML private TableColumn<Parts, String> associatedPartInventoryLevelColumn;
+    @FXML private TableColumn<Parts, String> associatedPartPriceColumn;
 
     private Product currentProduct;
     private ObservableList<Parts> associatedPartsTableViewHolder = FXCollections.observableArrayList();
@@ -54,7 +54,7 @@ public class AddProductWindow implements Initializable {
     //configure the associatedPartSearchField
     @FXML TextField associatedPartSearchField;
 
-    //Method that uses an ActionEvent(button press) to show the mainMenu.fxml
+    //Method that uses an ActionEvent(button press) to show the mainMenu.fxm
     private void returnToMainMenu(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
         Scene mainControllerScene = new Scene(root);
