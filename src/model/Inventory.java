@@ -24,7 +24,6 @@ public class Inventory {
         for (int i = 0; i < allParts.size(); ++i) {
             if (part == allParts.get(i))
             allParts.remove(i);
-            return;
         }
 
     }

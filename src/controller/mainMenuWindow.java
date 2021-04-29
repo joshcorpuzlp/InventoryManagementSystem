@@ -88,6 +88,8 @@ public class mainMenuWindow implements Initializable {
         Parts selectedPart;
         selectedPart = partsTableView.getSelectionModel().getSelectedItem();
 
+
+        //alert message
         if (partsTableView.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.NONE);
@@ -99,15 +101,14 @@ public class mainMenuWindow implements Initializable {
         else {
             if (getAllParts().size() > 1) {
                 //confirm deletion
-                Parts partToDelete = partsTableView.getSelectionModel().getSelectedItem();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.initModality(Modality.NONE);
                 alert.setTitle("Delete Part");
                 alert.setHeaderText("Deleting Part");
-                alert.setContentText("Are you sure you want to delete " + partToDelete.getPartName() + "?");
+                alert.setContentText("Are you sure you want to delete " + selectedPart.getPartName() + "?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    deletePart(partToDelete);
+                    deletePart(selectedPart);
                 }
             }
             else {

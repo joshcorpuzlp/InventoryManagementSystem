@@ -8,13 +8,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.inHousePart;
 import model.outsourcePart;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddPartWindow implements Initializable {
@@ -53,13 +56,20 @@ public class AddPartWindow implements Initializable {
         maxInventoryLevelInput = Integer.parseInt(maxField.getText());
         minInventoryLevelInput = Integer.parseInt(minField.getText());
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Save new part");
+        alert.setHeaderText("Saving new part");
+        alert.setContentText("Are you sure you want to save " + partNameInput + "?");
+        Optional<ButtonType> result = alert.showAndWait();
+
         //create a conditional statements to decide whether to use machineIDInput or companyName input
-        if (isPartInHouse) {
+        if (isPartInHouse && (result.get() == ButtonType.OK)) {
             int machineIDInput = Integer.parseInt(machineIDField.getText());
             Inventory.getAllParts().add(new inHousePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, minInventoryLevelInput, machineIDInput));
         }
 
-        else {
+        else if (!(isPartInHouse) && result.get() == ButtonType.OK){
             String companyNameInput = machineIDField.getText();
             Inventory.getAllParts().add(new outsourcePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, maxInventoryLevelInput, companyNameInput));
         }
