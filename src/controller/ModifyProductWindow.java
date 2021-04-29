@@ -26,24 +26,24 @@ import static model.Inventory.searchByPartName;
 
 public class ModifyProductWindow implements Initializable{
 
-    @FXML TextField productIDField;
-    @FXML TextField productNameField;
-    @FXML TextField inventoryLevelField;
-    @FXML TextField productPriceField;
-    @FXML TextField maxInventoryField;
-    @FXML TextField minInventoryField;
+    @FXML private TextField productIDField;
+    @FXML private TextField productNameField;
+    @FXML private TextField inventoryLevelField;
+    @FXML private TextField productPriceField;
+    @FXML private TextField maxInventoryField;
+    @FXML private TextField minInventoryField;
 
-    @FXML TableView partsTableView;
-    @FXML TableColumn<Parts, String> partIDColumn;
-    @FXML TableColumn<Parts, String> partNameColumn;
-    @FXML TableColumn<Parts, String> partInventoryLevelColumn;
-    @FXML TableColumn<Parts, String> partPriceColumn;
+    @FXML private TableView partsTableView;
+    @FXML private TableColumn<Parts, String> partIDColumn;
+    @FXML private TableColumn<Parts, String> partNameColumn;
+    @FXML private TableColumn<Parts, String> partInventoryLevelColumn;
+    @FXML private TableColumn<Parts, String> partPriceColumn;
 
-    @FXML TableView associatedPartsTableView;
-    @FXML TableColumn<Parts, String> associatedPartIDColumn;
-    @FXML TableColumn<Parts, String> associatedPartNameColumn;
-    @FXML TableColumn<Parts, String> associatedPartInventoryLevelColumn;
-    @FXML TableColumn<Parts, String> associatedPartPriceColumn;
+    @FXML private TableView associatedPartsTableView;
+    @FXML private TableColumn<Parts, String> associatedPartIDColumn;
+    @FXML private TableColumn<Parts, String> associatedPartNameColumn;
+    @FXML private TableColumn<Parts, String> associatedPartInventoryLevelColumn;
+    @FXML private TableColumn<Parts, String> associatedPartPriceColumn;
 
     //configure variables to determine current Product object and to hold associatedparts to be added to the Product object
     private Product currentProduct;
