@@ -2,14 +2,9 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import model.Parts;
+import model.Part;
 import model.Inventory;
 import model.inHousePart;
 import model.outsourcePart;
@@ -64,7 +59,7 @@ public class ModifyPartWindow implements Initializable {
 
     public void saveModifications(ActionEvent actionEvent) throws IOException{
         //declaring variables to hold inputs, redundant but done to maintain readability
-        Parts updatedInfo;
+        Part updatedInfo;
         String partNameInput;
         int inventoryInput;
         double priceInput;
@@ -131,7 +126,7 @@ public class ModifyPartWindow implements Initializable {
 
 
         //initialize text fields with the selected part identified by the index
-        Parts selectedPart = Inventory.getAllParts().get(getPartIndexNumber());
+        Part selectedPart = Inventory.getAllParts().get(getPartIndexNumber());
         if (selectedPart.getClass() == inHousePart.class) {
             nameField.setText(selectedPart.getPartName());
             inventoryLevelField.setText(Integer.toString(selectedPart.getPartInventoryLevel()));

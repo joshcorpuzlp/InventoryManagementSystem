@@ -1,9 +1,7 @@
 package model;
 
 
-import model.Parts;
-
-public class inHousePart extends Parts {
+public class inHousePart extends Part {
     private int machineID;
 
     /**

@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Product {
-    private ObservableList<Parts> associatedParts = FXCollections.observableArrayList();
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     private int productID;
     private static int productCounter = 1;
     private SimpleStringProperty productName;
@@ -21,11 +21,11 @@ public class Product {
         setProductMinInventory(productMinInventory);
     }
 
-    public ObservableList<Parts> getAssociatedParts() {
+    public ObservableList<Part> getAssociatedParts() {
         return associatedParts;
     }
 
-    public void setAssociatedParts(Parts part) {
+    public void setAssociatedParts(Part part) {
         associatedParts.add(part);
     }
 

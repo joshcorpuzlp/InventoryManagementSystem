@@ -8,9 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
+import model.Utility;
 import model.inHousePart;
 import model.outsourcePart;
 
@@ -41,7 +44,7 @@ public class AddPartWindow implements Initializable {
     private boolean isPartInHouse = false;
 
 
-    //Create a method that will add a new part to the tableview with the addpart window
+    //Create a method that will add a new part to the tableview with the addPart window
     public void saveNewPart(ActionEvent actionEvent) throws IOException {
         String partNameInput;
         int inventoryInput;
@@ -55,6 +58,7 @@ public class AddPartWindow implements Initializable {
         priceInput = Double.parseDouble(priceField.getText());
         maxInventoryLevelInput = Integer.parseInt(maxField.getText());
         minInventoryLevelInput = Integer.parseInt(minField.getText());
+
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);

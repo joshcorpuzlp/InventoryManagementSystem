@@ -1,8 +1,16 @@
+/**
+ * Supplied class Part.java
+ */
+
+/**
+ *
+ * @author Joshua Corpuz
+ */
 package model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Parts {
+public abstract class Part {
 
     //id field needs to also have a corresponding static int id to keep count of all the inputted items.
     private int id;
@@ -11,7 +19,7 @@ public class Parts {
     private int partInventoryLevel, maxInventory, minInventory;
     private double price;
 
-    public Parts(String partName, int partInventoryLevel, double price, int maxInventory, int minInventory) {
+    public Part(String partName, int partInventoryLevel, double price, int maxInventory, int minInventory) {
         setId();
         setPartName(partName);
         setPartInventoryLevel(partInventoryLevel);

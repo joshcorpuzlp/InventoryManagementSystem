@@ -5,13 +5,13 @@ import javafx.collections.ObservableList;
 
 public class TotalParts {
 
-    private static ObservableList<Parts> totalParts = FXCollections.observableArrayList();
+    private static ObservableList<Part> totalParts = FXCollections.observableArrayList();
 
-    public static void addPart(Parts part) {
+    public static void addPart(Part part) {
         totalParts.add(part);
     }
 
-    public static ObservableList<Parts> returnAllData() {
+    public static ObservableList<Part> returnAllData() {
         return totalParts;
     }
 }

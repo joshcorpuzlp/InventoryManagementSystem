@@ -14,7 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
-import model.Parts;
+import model.Part;
 import model.Product;
 
 import java.io.IOException;
@@ -27,12 +27,12 @@ import static model.Inventory.*;
 public class mainMenuWindow implements Initializable {
 
     //these will configure the PartsTableView
-    @FXML private TableView<Parts> partsTableView;
+    @FXML private TableView<Part> partsTableView;
 
-    @FXML private TableColumn<Parts, String> partIDColumn;
-    @FXML private TableColumn<Parts, String> partNameColumn;
-    @FXML private TableColumn<Parts, String> inventoryLevelColumn;
-    @FXML private TableColumn<Parts, String> priceColumn;
+    @FXML private TableColumn<Part, String> partIDColumn;
+    @FXML private TableColumn<Part, String> partNameColumn;
+    @FXML private TableColumn<Part, String> inventoryLevelColumn;
+    @FXML private TableColumn<Part, String> priceColumn;
 
     //these will configure ProductTableView
     @FXML private TableView<Product> productTableView;
@@ -61,10 +61,10 @@ public class mainMenuWindow implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //initialize the PartsTableView
-        partIDColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("id"));
-        partNameColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("partName"));
-        inventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("partInventoryLevel"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("price"));
+        partIDColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("id"));
+        partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partName"));
+        inventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partInventoryLevel"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
 
         //set PartsTable to allow edits
         partsTableView.setEditable(true);
@@ -111,7 +111,7 @@ public class mainMenuWindow implements Initializable {
 
     //selects the item from the partsTableView and then deletes
     public void deletePartButton(ActionEvent actionEvent) {
-        Parts selectedPart;
+        Part selectedPart;
         selectedPart = partsTableView.getSelectionModel().getSelectedItem();
 
 
@@ -171,7 +171,7 @@ public class mainMenuWindow implements Initializable {
     public void partSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = partSearchField.getText();
 
-        ObservableList<Parts> foundParts = searchByPartName(searchInput);
+        ObservableList<Part> foundParts = searchByPartName(searchInput);
         partsTableView.setItems(foundParts);
 
         //shows alert message if searchinput produced 0 results.

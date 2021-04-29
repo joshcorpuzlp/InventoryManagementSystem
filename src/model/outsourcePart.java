@@ -1,9 +1,8 @@
 package model;
 
 import javafx.beans.property.SimpleStringProperty;
-import model.Parts;
 
-public class outsourcePart extends Parts {
+public class outsourcePart extends Part {
     private SimpleStringProperty companyName;
 
     //constructor that extends Parts

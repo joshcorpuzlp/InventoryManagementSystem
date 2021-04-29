@@ -4,17 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import model.Inventory;
-import model.Parts;
+import model.Part;
 import model.Product;
 
 
@@ -34,20 +29,20 @@ public class ModifyProductWindow implements Initializable{
     @FXML private TextField minInventoryField;
 
     @FXML private TableView partsTableView;
-    @FXML private TableColumn<Parts, String> partIDColumn;
-    @FXML private TableColumn<Parts, String> partNameColumn;
-    @FXML private TableColumn<Parts, String> partInventoryLevelColumn;
-    @FXML private TableColumn<Parts, String> partPriceColumn;
+    @FXML private TableColumn<Part, String> partIDColumn;
+    @FXML private TableColumn<Part, String> partNameColumn;
+    @FXML private TableColumn<Part, String> partInventoryLevelColumn;
+    @FXML private TableColumn<Part, String> partPriceColumn;
 
     @FXML private TableView associatedPartsTableView;
-    @FXML private TableColumn<Parts, String> associatedPartIDColumn;
-    @FXML private TableColumn<Parts, String> associatedPartNameColumn;
-    @FXML private TableColumn<Parts, String> associatedPartInventoryLevelColumn;
-    @FXML private TableColumn<Parts, String> associatedPartPriceColumn;
+    @FXML private TableColumn<Part, String> associatedPartIDColumn;
+    @FXML private TableColumn<Part, String> associatedPartNameColumn;
+    @FXML private TableColumn<Part, String> associatedPartInventoryLevelColumn;
+    @FXML private TableColumn<Part, String> associatedPartPriceColumn;
 
     //configure variables to determine current Product object and to hold associatedparts to be added to the Product object
     private Product currentProduct;
-    private ObservableList<Parts> associatedPartsTableViewHolder = FXCollections.observableArrayList();
+    private ObservableList<Part> associatedPartTableViewHolder = FXCollections.observableArrayList();
 
     //configure variable and methods on how to set and return the index number from the productTableView
     private static int productIndexNumber;
@@ -93,7 +88,7 @@ public class ModifyProductWindow implements Initializable{
 
         //calls on a temporaryHolder of associated views to add and uses an enhanced for loop to add the contents to the current product
         currentProduct.getAssociatedParts().removeAll();
-        for (Parts part : associatedPartsTableViewHolder) {
+        for (Part part : associatedPartTableViewHolder) {
             currentProduct.setAssociatedParts(part);
         }
 
@@ -105,27 +100,27 @@ public class ModifyProductWindow implements Initializable{
 
     //method that adds a selected part from the Parts table view into a holder of AssociatedParts
     public void addAssociatedPart(ActionEvent actionEvent) {
-        Parts selectedAssociatedPart;
-        selectedAssociatedPart = (Parts) partsTableView.getSelectionModel().getSelectedItem();
-        associatedPartsTableViewHolder.add(selectedAssociatedPart);
+        Part selectedAssociatedPart;
+        selectedAssociatedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
+        associatedPartTableViewHolder.add(selectedAssociatedPart);
 
-        associatedPartsTableView.setItems(associatedPartsTableViewHolder);
+        associatedPartsTableView.setItems(associatedPartTableViewHolder);
     }
 
     //method to remove a selected part from the associatedPartsTableView
     public void removeAssociatedPart(ActionEvent actionEvent) {
-        Parts selectedAssociatedPart;
-        selectedAssociatedPart = (Parts) partsTableView.getSelectionModel().getSelectedItem();
-        associatedPartsTableViewHolder.remove(selectedAssociatedPart);
+        Part selectedAssociatedPart;
+        selectedAssociatedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
+        associatedPartTableViewHolder.remove(selectedAssociatedPart);
 
-        associatedPartsTableView.setItems(associatedPartsTableViewHolder);
+        associatedPartsTableView.setItems(associatedPartTableViewHolder);
     }
 
     //handler that triggers the searchByPartName method
     public void partSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = partSearchField.getText();
 
-        ObservableList<Parts> foundParts = searchByPartName(searchInput);
+        ObservableList<Part> foundParts = searchByPartName(searchInput);
         partsTableView.setItems(foundParts);
 
         //shows alert message if searchInput produced 0 results.
@@ -144,7 +139,7 @@ public class ModifyProductWindow implements Initializable{
     public void associatePartSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = associatedPartSearchField.getText();
 
-        ObservableList<Parts> foundParts = searchByPartName(searchInput);
+        ObservableList<Part> foundParts = searchByPartName(searchInput);
         associatedPartsTableView.setItems(foundParts);
 
         //shows alert message if searchInput produced 0 results.
@@ -169,10 +164,10 @@ public class ModifyProductWindow implements Initializable{
         productIDField.setDisable(true);
 
         //initialize the PartsTableView
-        partIDColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("id"));
-        partNameColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("partName"));
-        partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("partInventoryLevel"));
-        partPriceColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("price"));
+        partIDColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("id"));
+        partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partName"));
+        partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partInventoryLevel"));
+        partPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
 
         //set PartsTable to allow edits
         partsTableView.setEditable(true);
@@ -181,10 +176,10 @@ public class ModifyProductWindow implements Initializable{
         partsTableView.setItems(Inventory.getAllParts());
 
         //initialize the AssociatedPartsTableView
-        associatedPartIDColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("id"));
-        associatedPartNameColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("partName"));
-        associatedPartInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("partInventoryLevel"));
-        associatedPartPriceColumn.setCellValueFactory(new PropertyValueFactory<Parts, String>("price"));
+        associatedPartIDColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("id"));
+        associatedPartNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partName"));
+        associatedPartInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partInventoryLevel"));
+        associatedPartPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
 
         //set associatedPartsTable to allow edits
         associatedPartsTableView.setEditable(true);

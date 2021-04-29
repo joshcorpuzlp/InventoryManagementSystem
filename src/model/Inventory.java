@@ -2,34 +2,33 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 
 import java.util.Locale;
 
 public class Inventory {
-    private static ObservableList<Parts> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
 
     //flag variable needed for disableInitializeDataSet()
     private static boolean isFirstTime = true;
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     //Method to add a part object into the private static data member allParts @param is a Parts object.
-    public static void addPart(Parts part) {
+    public static void addPart(Part part) {
         allParts.add(part);
     }
 
-    public static void updatePart(int index, Parts selectedPart) {
+    public static void updatePart(int index, Part selectedPart) {
         allParts.set(index, selectedPart);
     }
 
-    public static void deletePart(Parts part) {
+    public static void deletePart(Part part) {
         for (int i = 0; i < allParts.size(); ++i) {
             if (part == allParts.get(i))
             allParts.remove(i);
         }
     }
 
-    public static ObservableList<Parts> getAllParts() {
+    public static ObservableList<Part> getAllParts() {
         return allParts;
     }
 
@@ -50,28 +49,28 @@ public class Inventory {
 
     //Method that first checks if the input is String or an int. Then, it will check each element of the allParts array and add the matches to
     //another ObservableList called foundPartNames and return that to be shown as the new contents of the partsTableView
-    public static ObservableList<Parts> searchByPartName(String searchInput) {
-        ObservableList<Parts> foundPartNames = FXCollections.observableArrayList();
+    public static ObservableList<Part> searchByPartName(String searchInput) {
+        ObservableList<Part> foundPartNames = FXCollections.observableArrayList();
         boolean isText = true;
         if (searchInput.matches(".*\\d.*")) {
             isText = false;
         }
 
         if (isText) {
-            for (Parts foundParts : getAllParts()) {
+            for (Part foundPart : getAllParts()) {
                 //conditional statement makes both the searchInput string and the partName String lowerCase so that it can disregard capitalization
-                if (foundParts.getPartName().toLowerCase(Locale.ROOT).contains(searchInput.toLowerCase(Locale.ROOT))) {
-                    foundPartNames.add(foundParts);
-                } else if (foundParts.getPartName().equals("")) {
+                if (foundPart.getPartName().toLowerCase(Locale.ROOT).contains(searchInput.toLowerCase(Locale.ROOT))) {
+                    foundPartNames.add(foundPart);
+                } else if (foundPart.getPartName().equals("")) {
                     foundPartNames = getAllParts();
                 }
             }
         }
         else {
-            for (Parts foundParts : getAllParts()) {
-                if (foundParts.getId() == Integer.parseInt(searchInput)) {
-                    foundPartNames.add(foundParts);
-                } else if (foundParts.getPartName().equals("")) {
+            for (Part foundPart : getAllParts()) {
+                if (foundPart.getId() == Integer.parseInt(searchInput)) {
+                    foundPartNames.add(foundPart);
+                } else if (foundPart.getPartName().equals("")) {
                     foundPartNames = getAllParts();
                 }
             }
