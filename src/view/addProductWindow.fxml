@@ -84,7 +84,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <TextField layoutX="968.0" layoutY="31.0" prefHeight="25.0" prefWidth="182.0" promptText="Search by Part ID or Part Name" />
+      <TextField fx:id="partSearchField" layoutX="968.0" layoutY="31.0" onAction="#partSearchFieldTrigger" prefHeight="25.0" prefWidth="182.0" promptText="Search by Part ID or Part Name" />
       <Button layoutX="856.0" layoutY="352.0" mnemonicParsing="false" onAction="#addAssociatedPart" text="Add" />
       <TableView fx:id="associatedPartsTableView" layoutX="600.0" layoutY="409.0" prefHeight="280.0" prefWidth="550.0">
          <columns>
@@ -99,7 +99,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <TextField layoutX="968.0" layoutY="377.0" prefHeight="25.0" prefWidth="182.0" promptText="Search by Part ID or Part Name" />
-      <Button layoutX="803.0" layoutY="697.0" mnemonicParsing="false" text="Remove Associated Part" />
+      <TextField fx:id="associatedPartSearchField" layoutX="968.0" layoutY="377.0" onAction="#associatePartSearchFieldTrigger" prefHeight="25.0" prefWidth="182.0" promptText="Search by Part ID or Part Name" />
+      <Button layoutX="803.0" layoutY="697.0" mnemonicParsing="false" onAction="#removeAssociatedPart" text="Remove Associated Part" />
    </children>
 </AnchorPane>

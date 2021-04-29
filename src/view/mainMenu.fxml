@@ -56,7 +56,7 @@
       <HBox alignment="CENTER" layoutX="976.0" layoutY="381.0" prefHeight="54.0" prefWidth="174.0" spacing="10.0">
          <children>
             <Button mnemonicParsing="false" onAction="#addProductButtonPressed" text="Add" />
-            <Button mnemonicParsing="false" text="Modify" />
+            <Button mnemonicParsing="false" onAction="#modifyProductButton" text="Modify" />
             <Button mnemonicParsing="false" onAction="#deleteProductButton" text="Delete" />
          </children>
       </HBox>

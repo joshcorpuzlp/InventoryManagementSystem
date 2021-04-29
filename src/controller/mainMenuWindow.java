@@ -259,5 +259,21 @@ public class mainMenuWindow implements Initializable {
         window.show();
     }
 
+    //method to retrieve the selected Product object from the table view then calls the modifyPart button
+    public void modifyProductButton(ActionEvent actionEvent) throws IOException {
+        int selectedIndex;
+        selectedIndex = productTableView.getSelectionModel().getFocusedIndex();
+
+        ModifyProductWindow.setProductIndexNumber(selectedIndex);
+
+        Parent root = FXMLLoader.load(getClass().getResource("../view/ModifyProductWindow.fxml"));
+        Scene modifyPartWindowScene = new Scene(root);
+
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(modifyPartWindowScene);
+        window.show();
+
+    }
+
 
 }

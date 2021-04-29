@@ -41,9 +41,9 @@ public class Inventory {
     //called to add the data set to allParts IF isFirstTime is true;
     public static void initializeDataSet() {
         if (isFirstTime) {
-            addPart(new inHousePart("Screws", 10, 10.99, 10, 5, 1010));
-            addPart(new inHousePart("Nails", 10, 10.99, 10, 5, 1011));
-            addPart(new inHousePart("Hammer", 10, 10.99, 10, 5, 1012));
+            addPart(new outsourcePart("Magic Keyboard", 100, 69.99, 10, 5, "Apple"));
+            addPart(new outsourcePart("Magic Trackpad", 10, 59.99, 10, 5, "Apple"));
+            addPart(new inHousePart("USB C Charger", 10, 10.99, 10, 5, 1012));
         }
     }
 
@@ -93,9 +93,10 @@ public class Inventory {
 
     public static void initializeProductDataSet() {
         if (isFirstTime) {
-            addProduct(new Product("Screws", 10, 10.99, 10, 5));
-            addProduct(new Product("Nails", 10, 10.99, 10, 5));
-            addProduct(new Product("Hammer", 10, 10.99, 10, 5));
+            addProduct(new Product("Macbook Pro 13 inch", 100, 1299.99, 500, 5));
+            addProduct(new Product("Mac Mini", 125, 699.99, 400, 5));
+            addProduct(new Product("IPad Pro 10 inch", 200, 999.99, 350, 5));
+            addProduct(new Product("IPad Pro 12.9 inch", 200, 1099.99, 350, 5));
         }
     }
 

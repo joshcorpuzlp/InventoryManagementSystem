@@ -9,15 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Parts;
-import javafx.scene.control.*;
 import model.Product;
 
 
@@ -25,7 +22,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static model.Inventory.initializeDataSet;
+import static model.Inventory.searchByPartName;
+
 
 public class AddProductWindow implements Initializable {
     @FXML TextField productIDField;
@@ -50,14 +48,24 @@ public class AddProductWindow implements Initializable {
     private Product currentProduct;
     private ObservableList<Parts> associatedPartsTableViewHolder = FXCollections.observableArrayList();
 
+    //configure the partSearchField
+    @FXML TextField partSearchField;
 
-    public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
+    //configure the associatedPartSearchField
+    @FXML TextField associatedPartSearchField;
+
+    //Method that uses an ActionEvent(button press) to show the mainMenu.fxml
+    private void returnToMainMenu(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
-        Scene addPartWindowScene = new Scene(root);
+        Scene mainControllerScene = new Scene(root);
 
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(addPartWindowScene);
+        window.setScene(mainControllerScene);
         window.show();
+    }
+
+    public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
+        returnToMainMenu(actionEvent);
     }
 
     public void saveButtonPressed(ActionEvent actionEvent) throws IOException{
@@ -72,26 +80,25 @@ public class AddProductWindow implements Initializable {
         maxInventoryLevel = Integer.parseInt(maxInventoryField.getText());
         minInventoryLevel = Integer.parseInt(minInventoryField.getText());
 
+        //creates a new Product object with identifier currentProduct
         currentProduct = new Product(productNameInput, productInventoryLevel, productPriceInput, maxInventoryLevel, minInventoryLevel);
 
-        //adds the inputs into the Inventory ObservableList of Products
+        //passes currentProduct as the argument for the .addMethod.
         Inventory.getAllProducts().add(currentProduct);
 
-        //calls on a temporaryHolder of associated views to add and uses an enhanced for loop to add the contents to the current product
+        //utilizes the associatedPartsTableviewHolder wiht a for loop to pass each element as an argument
+        //for the .setAssociatedParts method.
         for (Parts part : associatedPartsTableViewHolder) {
             currentProduct.setAssociatedParts(part);
         }
 
 
-        //returns to mainMenuWindow
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainMenu.fxml"));
-        Scene mainControllerScene = new Scene(root);
-
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        window.setScene(mainControllerScene);
-        window.show();
+        //calls the returnToMainMen() method.
+        returnToMainMenu(actionEvent);
 
     }
+
+
 
     //method that adds a selected part from the Parts table view into a holder of AssociatedParts
     public void addAssociatedPart(ActionEvent actionEvent) {
@@ -101,6 +108,55 @@ public class AddProductWindow implements Initializable {
 
         associatedPartsTableView.setItems(associatedPartsTableViewHolder);
     }
+
+    //method to remove a selected part from the associatedPartsTableView
+    public void removeAssociatedPart(ActionEvent actionEvent) {
+        Parts selectedAssociatedPart;
+        selectedAssociatedPart = (Parts) partsTableView.getSelectionModel().getSelectedItem();
+        associatedPartsTableViewHolder.remove(selectedAssociatedPart);
+
+        associatedPartsTableView.setItems(associatedPartsTableViewHolder);
+    }
+
+    //handler that triggers the searchByPartName method
+    public void partSearchFieldTrigger(ActionEvent actionEvent) {
+        String searchInput = partSearchField.getText();
+
+        ObservableList<Parts> foundParts = searchByPartName(searchInput);
+        partsTableView.setItems(foundParts);
+
+        //shows alert message if searchInput produced 0 results.
+        if (partsTableView.getItems().size() == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.NONE);
+            alert.setTitle("Part not found");
+            alert.setHeaderText("Search produced no results.");
+            alert.setContentText("\"" + searchInput +"\""  +" found no results.");
+            alert.showAndWait();
+        }
+        partSearchField.setText("");
+
+    }
+    //handler that triggers the searchByPartName method
+    public void associatePartSearchFieldTrigger(ActionEvent actionEvent) {
+        String searchInput = associatedPartSearchField.getText();
+
+        ObservableList<Parts> foundParts = searchByPartName(searchInput);
+        associatedPartsTableView.setItems(foundParts);
+
+        //shows alert message if searchInput produced 0 results.
+        if (partsTableView.getItems().size() == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.NONE);
+            alert.setTitle("Part not found");
+            alert.setHeaderText("Search produced no results.");
+            alert.setContentText("\"" + searchInput +"\""  +" found no results.");
+            alert.showAndWait();
+        }
+        partSearchField.setText("");
+
+    }
+
 
 
 
