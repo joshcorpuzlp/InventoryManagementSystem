@@ -121,7 +121,7 @@ public class mainMenuWindow implements Initializable {
             alert.initModality(Modality.NONE);
             alert.setTitle("Nothing selected");
             alert.setHeaderText("Nothing selected");
-            alert.setContentText("Nothing was selected to modify");
+            alert.setContentText("Nothing was selected to delete");
             alert.showAndWait();
         }
         else {
@@ -205,6 +205,58 @@ public class mainMenuWindow implements Initializable {
         }
         productSearchField.setText("");
 
+    }
+
+    //selects the item from the partsTableView and then deletes
+    public void deleteProductButton(ActionEvent actionEvent) throws IOException {
+        Product selectedProduct;
+        selectedProduct = productTableView.getSelectionModel().getSelectedItem();
+
+
+        //alert message
+        if (productTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.NONE);
+            alert.setTitle("Nothing selected");
+            alert.setHeaderText("Nothing selected");
+            alert.setContentText("Nothing was selected to delete");
+            alert.showAndWait();
+        }
+        else {
+            if (getAllProducts().size() > 1) {
+                //confirm deletion
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.initModality(Modality.NONE);
+                alert.setTitle("Delete Product");
+                alert.setHeaderText("Deleting product");
+                alert.setContentText("Are you sure you want to delete " + selectedProduct.getProductName() + "?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    deleteProduct(selectedProduct);
+                }
+            }
+            else {
+                //cannot delete the last part
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initModality(Modality.NONE);
+                alert.setTitle("CANNOT DELETE");
+                alert.setHeaderText("CANNOT DELETE");
+                alert.setContentText("This is the last item! Product table cannot be empty.");
+                alert.showAndWait();
+            }
+        }
+
+
+
+    }
+    //method triggered by addProduct Button
+    public void addProductButtonPressed(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../view/addProductWindow.fxml"));
+        Scene addPartWindowScene = new Scene(root);
+
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(addPartWindowScene);
+        window.show();
     }
 
 

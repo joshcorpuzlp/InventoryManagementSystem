@@ -55,9 +55,9 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="976.0" layoutY="381.0" prefHeight="54.0" prefWidth="174.0" spacing="10.0">
          <children>
-            <Button mnemonicParsing="false" text="Add" />
+            <Button mnemonicParsing="false" onAction="#addProductButtonPressed" text="Add" />
             <Button mnemonicParsing="false" text="Modify" />
-            <Button mnemonicParsing="false" text="Delete" />
+            <Button mnemonicParsing="false" onAction="#deleteProductButton" text="Delete" />
          </children>
       </HBox>
       <TextField fx:id="partSearchField" layoutX="394.0" layoutY="69.0" onAction="#partSearchFieldTrigger" prefHeight="25.0" prefWidth="182.0" promptText="Search by Part ID or Part Name" />

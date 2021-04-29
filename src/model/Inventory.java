@@ -131,6 +131,13 @@ public class Inventory {
         return foundProductNames;
     }
 
+    public static void deleteProduct(Product product) {
+        for (int i = 0; i < allProducts.size(); ++i) {
+            if (product == allProducts.get(i))
+                allProducts.remove(i);
+        }
+    }
+
 
 
 
