@@ -1,6 +1,6 @@
 package controller;
 
-import javafx.collections.FXCollections;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,10 +15,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Parts;
+import model.Product;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -34,12 +34,19 @@ public class mainMenuWindow implements Initializable {
     @FXML private TableColumn<Parts, String> inventoryLevelColumn;
     @FXML private TableColumn<Parts, String> priceColumn;
 
-    //configure the Add Part button
-    @FXML private Button AddPartButton;
+    //these will configure ProductTableView
+    @FXML private TableView<Product> productTableView;
+    @FXML private TableColumn<Product, String> productIDColumn;
+    @FXML private TableColumn<Product, String> productNameColumn;
+    @FXML private TableColumn<Product, String> productStockColumn;
+    @FXML private TableColumn<Product, String> productPriceColumn;
 
 
-    //configure the search field
-    @FXML private TextField searchField;
+    //configure the part search field
+    @FXML private TextField partSearchField;
+    //configures the product search field
+    @FXML private TextField productSearchField;
+
 
 
 
@@ -65,13 +72,32 @@ public class mainMenuWindow implements Initializable {
 
         //calls the initializeDataSet to add initialData to the private static ObservableList allParts
         initializeDataSet();
-        //sets a flag variable to false so it does not run any initialization code and diverts to the else block of the initialize dataset
-        disableInitializeDataSet();
+
         partsTableView.setItems(Inventory.getAllParts());
 
+        //initializes the ProductTableView
+        productIDColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productID"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
+        productStockColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productStock"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productPrice"));
+
+        //set ProductTableView to allow edits
+        productTableView.setEditable(true);
+        productTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        //calls the initializeProductDataSet to add initial product dat to the private static ObservableList allProducts
+        initializeProductDataSet();
+
+        //adds the observablelist allProducts to the productTableView
+        productTableView.setItems(Inventory.getAllProducts());
+
+
+
+        //sets a flag variable to false so it does not run any initialization code and diverts to the else block of the initialize dataset
+        disableInitializeDataSet();
+
+
     }
-
-
 
     //Opens that addPartWindow
     public void addPartButtonPressed(ActionEvent actionEvent) throws IOException{
@@ -122,8 +148,6 @@ public class mainMenuWindow implements Initializable {
             }
         }
 
-
-
     }
 
     //method to retrieve the selected Parts object from the table view then calls the modifyPart button
@@ -144,13 +168,44 @@ public class mainMenuWindow implements Initializable {
 
 
     //handler that triggers the searchByPartName method
-    public void searchFieldTrigger(ActionEvent actionEvent) {
-        String searchInput = searchField.getText();
+    public void partSearchFieldTrigger(ActionEvent actionEvent) {
+        String searchInput = partSearchField.getText();
 
         ObservableList<Parts> foundParts = searchByPartName(searchInput);
         partsTableView.setItems(foundParts);
-        searchField.setText("");
+
+        //shows alert message if searchinput produced 0 results.
+        if (partsTableView.getItems().size() == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.NONE);
+            alert.setTitle("Part not found");
+            alert.setHeaderText("Search produced no results.");
+            alert.setContentText("\"" + searchInput +"\""  +" found no results.");
+            alert.showAndWait();
+        }
+        partSearchField.setText("");
 
     }
+
+    //handler that triggers the searchByPartName method
+    public void productSearchFieldTrigger(ActionEvent actionEvent) {
+        String searchInput = productSearchField.getText();
+
+        ObservableList<Product> foundProducts = searchByProductName(searchInput);
+        productTableView.setItems(foundProducts);
+
+        //shows alert message if searchinput produced 0 results.
+        if (productTableView.getItems().size() == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.NONE);
+            alert.setTitle("Product not found");
+            alert.setHeaderText("Search produced no results.");
+            alert.setContentText("\"" + searchInput +"\""  +" found no results.");
+            alert.showAndWait();
+        }
+        productSearchField.setText("");
+
+    }
+
 
 }

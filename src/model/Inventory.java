@@ -8,8 +8,10 @@ import java.util.Locale;
 
 public class Inventory {
     private static ObservableList<Parts> allParts = FXCollections.observableArrayList();
+
+    //flag variable needed for disableInitializeDataSet()
     private static boolean isFirstTime = true;
-    //private static ObservableList<Products> allProducts;
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     //Method to add a part object into the private static data member allParts @param is a Parts object.
     public static void addPart(Parts part) {
@@ -25,7 +27,6 @@ public class Inventory {
             if (part == allParts.get(i))
             allParts.remove(i);
         }
-
     }
 
     public static ObservableList<Parts> getAllParts() {
@@ -34,8 +35,7 @@ public class Inventory {
 
     //essentially disables the initializeDataSet function after it is run.
     public static boolean disableInitializeDataSet() {
-        isFirstTime = false;
-        return isFirstTime;
+        return isFirstTime = false;
     }
 
     //called to add the data set to allParts IF isFirstTime is true;
@@ -46,6 +46,7 @@ public class Inventory {
             addPart(new inHousePart("Hammer", 10, 10.99, 10, 5, 1012));
         }
     }
+
 
     //Method that first checks if the input is String or an int. Then, it will check each element of the allParts array and add the matches to
     //another ObservableList called foundPartNames and return that to be shown as the new contents of the partsTableView
@@ -79,8 +80,62 @@ public class Inventory {
         return foundPartNames;
     }
 
+
+
+
+    public static void addProduct(Product product) {
+        allProducts.add(product);
+    }
+
+    public static ObservableList<Product> getAllProducts() {
+        return allProducts;
+    }
+
+    public static void initializeProductDataSet() {
+        if (isFirstTime) {
+            addProduct(new Product("Screws", 10, 10.99, 10, 5));
+            addProduct(new Product("Nails", 10, 10.99, 10, 5));
+            addProduct(new Product("Hammer", 10, 10.99, 10, 5));
+        }
+    }
+
+    //Method that first checks if the input is String or an int. Then, it will check each element of the allParts array and add the matches to
+    //another ObservableList called foundPartNames and return that to be shown as the new contents of the partsTableView
+    public static ObservableList<Product> searchByProductName(String searchInput) {
+        ObservableList<Product> foundProductNames = FXCollections.observableArrayList();
+        boolean isText = true;
+        if (searchInput.matches(".*\\d.*")) {
+            isText = false;
+        }
+
+        if (isText) {
+            for (Product foundProduct : getAllProducts()) {
+                //conditional statement makes both the searchInput string and the partName String lowerCase so that it can disregard capitalization
+                if (foundProduct.getProductName().toLowerCase(Locale.ROOT).contains(searchInput.toLowerCase(Locale.ROOT))) {
+                    foundProductNames.add(foundProduct);
+                } else if (foundProduct.getProductName().equals("")) {
+                    foundProductNames = getAllProducts();
+                }
+            }
+        }
+        else {
+            for (Product foundProduct : getAllProducts()) {
+                if (foundProduct.getProductID() == Integer.parseInt(searchInput)) {
+                    foundProductNames.add(foundProduct);
+                } else if (foundProduct.getProductName().equals("")) {
+                    foundProductNames = getAllProducts();
+                }
+            }
+}
+
+        return foundProductNames;
+    }
+
+
+
+
+
     public Inventory() {
 
     }
-
 }

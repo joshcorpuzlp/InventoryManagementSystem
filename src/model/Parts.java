@@ -8,13 +8,13 @@ public class Parts {
     private int id;
     private static int partCounter = 1;
     private SimpleStringProperty partName;
-    private int partInventoryLevel, maxInventory, minInventory;
+    private int stock, maxInventory, minInventory;
     private double price;
 
-    public Parts(String partName, int partInventoryLevel, double price, int maxInventory, int minInventory) {
-        this.id = partCounter++;
+    public Parts(String partName, int stock, double price, int maxInventory, int minInventory) {
+        setId();
         setPartName(partName);
-        setPartInventoryLevel(partInventoryLevel);
+        setStock(stock);
         setPrice(price);
         setMaxInventory(maxInventory);
         setMinInventory(minInventory);
@@ -25,8 +25,8 @@ public class Parts {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId() {
+        this.id = partCounter++;
     }
 
     public String getPartName() {
@@ -37,12 +37,12 @@ public class Parts {
         this.partName = new SimpleStringProperty(partName);
     }
 
-    public int getPartInventoryLevel() {
-        return partInventoryLevel;
+    public int getStock() {
+        return stock;
     }
 
-    public void setPartInventoryLevel(int partInventoryLevel) {
-        this.partInventoryLevel = partInventoryLevel;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public int getMaxInventory() {

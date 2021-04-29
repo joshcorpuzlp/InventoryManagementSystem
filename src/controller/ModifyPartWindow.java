@@ -144,7 +144,7 @@ public class ModifyPartWindow implements Initializable {
         Parts selectedPart = Inventory.getAllParts().get(getPartIndexNumber());
         if (selectedPart.getClass() == inHousePart.class) {
             nameField.setText(selectedPart.getPartName());
-            inventoryLevelField.setText(Integer.toString(selectedPart.getPartInventoryLevel()));
+            inventoryLevelField.setText(Integer.toString(selectedPart.getStock()));
             priceField.setText(Double.toString(selectedPart.getPrice()));
             maxField.setText(Integer.toString(selectedPart.getMaxInventory()));
             minField.setText(Integer.toString(selectedPart.getMinInventory()));
@@ -153,7 +153,7 @@ public class ModifyPartWindow implements Initializable {
         }
         if (selectedPart.getClass() == outsourcePart.class) {
             nameField.setText(selectedPart.getPartName());
-            inventoryLevelField.setText(Integer.toString(selectedPart.getPartInventoryLevel()));
+            inventoryLevelField.setText(Integer.toString(selectedPart.getStock()));
             priceField.setText(Double.toString(selectedPart.getPrice()));
             maxField.setText(Integer.toString(selectedPart.getMaxInventory()));
             minField.setText(Integer.toString(selectedPart.getMinInventory()));
