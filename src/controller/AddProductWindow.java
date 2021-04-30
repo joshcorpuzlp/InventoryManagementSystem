@@ -56,32 +56,32 @@ public class AddProductWindow implements Initializable {
 
 
 
-    public void validateInventoryInput(KeyEvent keyEvent) {
-        Utility.validIntInput(inventoryLevelField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-
-    }
-
-    public void validateMaxInput(KeyEvent keyEvent) {
-
-        Utility.validIntInput(maxInventoryField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-    }
-
-    public void validateMinInput(KeyEvent keyEvent) {
-        Utility.validIntInput(minInventoryField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-    }
-
-    public void validatePriceInput(KeyEvent keyEvent) {
-        Utility.validDoubleInput(productPriceField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-
-    }
+//    public void validateInventoryInput(KeyEvent keyEvent) {
+//        Utility.validIntInput(inventoryLevelField.getText());
+//        errorMessageLabel.setText(Utility.getErrorMessage());
+//        Utility.resetErrorMessage();
+//
+//    }
+//
+//    public void validateMaxInput(KeyEvent keyEvent) {
+//
+//        Utility.validIntInput(maxInventoryField.getText());
+//        errorMessageLabel.setText(Utility.getErrorMessage());
+//        Utility.resetErrorMessage();
+//    }
+//
+//    public void validateMinInput(KeyEvent keyEvent) {
+//        Utility.validIntInput(minInventoryField.getText());
+//        errorMessageLabel.setText(Utility.getErrorMessage());
+//        Utility.resetErrorMessage();
+//    }
+//
+//    public void validatePriceInput(KeyEvent keyEvent) {
+//        Utility.validDoubleInput(productPriceField.getText());
+//        errorMessageLabel.setText(Utility.getErrorMessage());
+//        Utility.resetErrorMessage();
+//
+//    }
 
 
     //Method that uses an ActionEvent(button press) to show the mainMenu.fxml

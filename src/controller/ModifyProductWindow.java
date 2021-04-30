@@ -65,32 +65,6 @@ public class ModifyProductWindow implements Initializable{
     @FXML TextField associatedPartSearchField;
 
 
-    public void validateInventoryInput(KeyEvent keyEvent) {
-        Utility.validIntInput(inventoryLevelField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-
-    }
-
-    public void validateMaxInput(KeyEvent keyEvent) {
-
-        Utility.validIntInput(maxInventoryField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-    }
-
-    public void validateMinInput(KeyEvent keyEvent) {
-        Utility.validIntInput(minInventoryField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-    }
-
-    public void validatePriceInput(KeyEvent keyEvent) {
-        Utility.validDoubleInput(productPriceField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-
-    }
 
     public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
         mainMenuWindow.returnToMainMenu(actionEvent);

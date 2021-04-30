@@ -12,12 +12,12 @@ import javafx.beans.property.SimpleStringProperty;
 
 public abstract class Part {
 
-    //id field needs to also have a corresponding static int id to keep count of all the inputted items.
     private int id;
-    private static int partCounter = 1;
     private SimpleStringProperty partName;
     private int partInventoryLevel, maxInventory, minInventory;
     private double price;
+    //id field needs to also have a corresponding static int id to keep count of all the inputted items.
+    private static int partCounter = 1;
 
     public Part(String partName, int partInventoryLevel, double price, int maxInventory, int minInventory) {
         setId();

@@ -6,6 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+class myExceptions extends Exception {
+    public myExceptions() {
+        super();
+    }
+
+    public myExceptions(String s) {
+        super(s);
+    }
+}
+
 public class Main extends Application {
 
     @Override

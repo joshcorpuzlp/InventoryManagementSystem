@@ -42,8 +42,7 @@ public class ModifyPartWindow implements Initializable {
     //configure the MachineID or Source Company to change labels
     @FXML
     private Label inHouseOutSourcedPrompt;
-    private boolean isPartInHouse = false;
-
+    private boolean isPartInHouse;
 
     //configure variable and methods on how to set and return the index number from the partsTableView
     private static int partIndexNumber;
@@ -54,82 +53,144 @@ public class ModifyPartWindow implements Initializable {
         return partIndexNumber;
     }
 
-    public void validateInventoryInput(KeyEvent keyEvent) {
-        Utility.validIntInput(inventoryLevelField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
+    private String partNameInput;
+    private int inventoryInput;
+    private double priceInput;
+    private int maxInventoryLevelInput;
+    private int minInventoryLevelInput;
+    private int machineIDInput;
+    private String companyNameInput;
 
-    }
 
-    public void validateMaxInput(KeyEvent keyEvent) {
+    private boolean isInputValid = true;
+    private String errorMessageContainer = "";
 
-        Utility.validIntInput(maxField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-    }
 
-    public void validateMinInput(KeyEvent keyEvent) {
-        Utility.validIntInput(minField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-    }
-
-    public void validatePriceInput(KeyEvent keyEvent) {
-        Utility.validDoubleInput(priceField.getText());
-        errorMessageLabel.setText(Utility.getErrorMessage());
-        Utility.resetErrorMessage();
-
-    }
-
-    public void validateInHouseInput(KeyEvent keyEvent) {
-        if (isPartInHouse) {
-            Utility.validIntInput(machineIDField.getText());
-            errorMessageLabel.setText(Utility.getErrorMessage());
-            Utility.resetErrorMessage();
+    public void inputValidation(ActionEvent actionEvent) throws  IOException {
+        //retrieve the inputs
+        try {
+            partNameInput = nameField.getText();
+            if (partNameInput.equals("")) {
+                throw new myExceptions("Part Name: Enter a string.\n");
+            }
+        } catch (myExceptions ex) {
+            errorMessageContainer += ex.getMessage();
+            isInputValid = false;
         }
-    }
 
+        try {
+            inventoryInput = Integer.parseInt(inventoryLevelField.getText());
+            if (inventoryLevelField.getText().equals("")) {
+                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
+            }
+            if (inventoryInput <= 0) {
+                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
+            }
+        } catch (NumberFormatException ex) {
+            errorMessageContainer += "Inventory field: enter a positive whole number.\n";
+            isInputValid = false;
+
+        } catch (myExceptions stockValidation) {
+            errorMessageContainer += stockValidation.getMessage();
+            isInputValid = false;
+
+        }
+
+        try {
+            priceInput = Double.parseDouble(priceField.getText());
+            if (priceField.getText().equals("")) {
+                throw new myExceptions("Price field: enter a value..\n");
+            }
+            if (priceInput <= 0) {
+                throw new myExceptions("Price field: enter a value greater than 0.\n");
+            }
+        } catch (myExceptions priceValidation) {
+            errorMessageContainer += priceValidation.getMessage();
+            isInputValid = false;
+
+        } catch (NumberFormatException ex) {
+            errorMessageContainer += "Price field: enter a positive number. Your input can contain decimals. \n";
+            isInputValid = false;
+
+        }
+
+        try {
+            maxInventoryLevelInput = Integer.parseInt(maxField.getText());
+            minInventoryLevelInput = Integer.parseInt(minField.getText());
+            if (maxField.getText().equals("") || minField.getText().equals("")) {
+                throw new myExceptions("Min and Max fields: enter values for the minimum and maximum inventory fields.\n");
+            }
+            if (maxInventoryLevelInput < minInventoryLevelInput) {
+                throw new myExceptions("Max inventory MUST be larger than the minimum inventory.\n");
+            }
+
+        } catch (NumberFormatException ex) {
+            errorMessageContainer += "Min and Max fields: enter a positive whole number.\n";
+            isInputValid = false;
+
+        } catch (myExceptions minMaxValidation) {
+            errorMessageContainer += minMaxValidation.getMessage();
+            isInputValid = false;
+
+        }
+
+        if (isPartInHouse) {
+            try {
+                machineIDInput = Integer.parseInt(machineIDField.getText());
+                if (machineIDField.getText().equals("")) {
+                    throw new myExceptions("Machine ID: Enter machine ID number.\n");
+                }
+            } catch (NumberFormatException ex) {
+                errorMessageContainer += "Machine ID: Enter a machine ID number.\n";
+                isInputValid = false;
+            } catch (myExceptions machineIDValidation) {
+                errorMessageContainer += machineIDValidation.getMessage();
+                isInputValid = false;
+            }
+        }
+        if (!isPartInHouse) {
+            try {
+                companyNameInput = machineIDField.getText();
+                if (machineIDField.getText().equals("")) {
+                    throw new myExceptions("Enter the source company.\n");
+                }
+
+            } catch (myExceptions companyNameValidation) {
+                errorMessageContainer += companyNameValidation.getMessage();
+            }
+        }
+        errorMessageLabel.setText(errorMessageContainer);
+        errorMessageContainer = "";
+    }
 
     public void saveModifications(ActionEvent actionEvent) throws IOException{
         //declaring variables to hold inputs, redundant but done to maintain readability
         Part updatedInfo;
-        String partNameInput;
-        int inventoryInput;
-        double priceInput;
-        int maxInventoryLevelInput;
-        int minInventoryLevelInput;
 
-        //retrieve the inputs
-        partNameInput = nameField.getText();
-        inventoryInput = Integer.parseInt(inventoryLevelField.getText());
-        priceInput = Double.parseDouble(priceField.getText());
-        maxInventoryLevelInput = Integer.parseInt(maxField.getText());
-        minInventoryLevelInput = Integer.parseInt(minField.getText());
+        //call on inputValidation method that will verify if inputs in the textFields are ok.
+        inputValidation(actionEvent);
 
-        boolean confirmationResponse = Utility.saveConfirmationMessage();
-
-        if (confirmationResponse) {
-            //conditional statements that declare whether the new Part is an inHouse part or an outSourced part
-            if (isPartInHouse) {
-                int machineIDInput = Integer.parseInt(machineIDField.getText());
+            //conditional statements that decide which type of class instantiation will occur
+            if (isPartInHouse && isInputValid) {
                 updatedInfo = new inHousePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, minInventoryLevelInput, machineIDInput);
+
+                //updates a specific element with the updatedInfo
+                Inventory.updatePart(getPartIndexNumber(), updatedInfo);
+                //return to mainMenuWindow
+                mainMenuWindow.returnToMainMenu(actionEvent);
+
             }
 
-            else {
-                String companyNameInput = machineIDField.getText();
+            if (!isPartInHouse && isInputValid) {
                 updatedInfo = new outsourcePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, maxInventoryLevelInput, companyNameInput);
+
+                //updates a specific element with the updatedInfo
+                Inventory.updatePart(getPartIndexNumber(), updatedInfo);
+                //return to mainMenuWindow
+                mainMenuWindow.returnToMainMenu(actionEvent);
             }
-
-            Inventory.updatePart(getPartIndexNumber(), updatedInfo);
-
-            //return to mainMenuWindow
-            mainMenuWindow.returnToMainMenu(actionEvent);
-        }
-        else {
-            return;
         }
 
-    }
 
 
 
@@ -175,6 +236,8 @@ public class ModifyPartWindow implements Initializable {
             minField.setText(Integer.toString(selectedPart.getMinInventory()));
             machineIDField.setText(Integer.toString(((inHousePart) selectedPart).getMachineID()));
             partSourceGroup.selectToggle(inHouseButton);
+            inHouseOutSource();
+
         }
         if (selectedPart.getClass() == outsourcePart.class) {
             nameField.setText(selectedPart.getPartName());
@@ -184,6 +247,8 @@ public class ModifyPartWindow implements Initializable {
             minField.setText(Integer.toString(selectedPart.getMinInventory()));
             machineIDField.setText(((outsourcePart) selectedPart).getCompanyName());
             partSourceGroup.selectToggle(outSourcedButton);
+            inHouseOutSource();
+
         }
 
         errorMessageLabel.setText("");

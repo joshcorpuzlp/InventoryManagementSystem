@@ -6,8 +6,11 @@ import javafx.stage.Modality;
 
 import java.util.Optional;
 
+
+
 public class Utility {
-    private static String errorMessage = "";
+
+
 
     public static boolean saveConfirmationMessage() {
         boolean isOK = false;
@@ -67,35 +70,42 @@ public class Utility {
     }
 
 
-    public static void validIntInput(String input)  {
-        try {
-            int inputToInt = Integer.parseInt(input);
-            if (inputToInt <= 0) {
-                errorMessage += "Input must be larger than 0.\n";
-            }
-        }
-        catch (NumberFormatException ex) {
-            errorMessage += "Please enter a positive whole number.\n";
-        }
-    }
-
-    public static void validDoubleInput(String input) {
-        try {
-            double inputToDouble = Double.parseDouble(input);
-            if (inputToDouble <= 0) {
-                errorMessage += "Enter value larger than 0.00\n";
-            }
-        }
-        catch (NumberFormatException ex) {
-            errorMessage += "Please enter value in the following format: 0.00";
-        }
-    }
-
-    public static String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public static void resetErrorMessage() {
-        errorMessage = "";
-    }
+//    public static void validIntInput(String input)  {
+//        try {
+//            int inputToInt = Integer.parseInt(input);
+//            if (inputToInt <= 0) {
+//                errorMessage += "Input must be larger than 0.\n";
+//            }
+//        }
+//        catch (NumberFormatException ex) {
+//            errorMessage += "Please enter a positive whole number.\n";
+//        }
+//    }
+//
+//    public static void validDoubleInput(String input) {
+//        try {
+//            double inputToDouble = Double.parseDouble(input);
+//            if (inputToDouble <= 0) {
+//                errorMessage += "Enter value larger than 0.00\n";
+//            }
+//        }
+//        catch (NumberFormatException ex) {
+//            errorMessage += "Please enter value in the following format: 0.00";
+//        }
+//    }
+//
+//    public static void maxAndMinValidation(String maxInput, String minInput) {
+//
+//        if (Integer.parseInt(maxInput) < Integer.parseInt(minInput)) {
+//            errorMessage += "Max inventory must be greater than min inventory";
+//        }
+//    }
+//
+//    public static String getErrorMessage() {
+//        return errorMessage;
+//    }
+//
+//    public static void resetErrorMessage() {
+//        errorMessage = "";
+//    }
 }
