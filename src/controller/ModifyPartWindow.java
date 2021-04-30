@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.Part;
-import model.Inventory;
-import model.inHousePart;
-import model.outsourcePart;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -73,22 +70,29 @@ public class ModifyPartWindow implements Initializable {
         maxInventoryLevelInput = Integer.parseInt(maxField.getText());
         minInventoryLevelInput = Integer.parseInt(minField.getText());
 
-        if (isPartInHouse) {
-            int machineIDInput = Integer.parseInt(machineIDField.getText());
-            updatedInfo = new inHousePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, minInventoryLevelInput, machineIDInput);
-        }
+        boolean confirmationResponse = Utility.saveConfirmationMessage();
 
+        if (confirmationResponse) {
+            //conditional statements that declare whether the new Part is an inHouse part or an outSourced part
+            if (isPartInHouse) {
+                int machineIDInput = Integer.parseInt(machineIDField.getText());
+                updatedInfo = new inHousePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, minInventoryLevelInput, machineIDInput);
+            }
+
+            else {
+                String companyNameInput = machineIDField.getText();
+                updatedInfo = new outsourcePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, maxInventoryLevelInput, companyNameInput);
+            }
+
+            Inventory.updatePart(getPartIndexNumber(), updatedInfo);
+
+            //return to mainMenuWindow
+            mainMenuWindow.returnToMainMenu(actionEvent);
+        }
         else {
-            String companyNameInput = machineIDField.getText();
-            updatedInfo = new outsourcePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, maxInventoryLevelInput, companyNameInput);
+            return;
         }
 
-
-        Inventory.updatePart(getPartIndexNumber(), updatedInfo);
-
-
-        //return to mainMenuWindow
-        mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
 

@@ -59,23 +59,22 @@ public class AddPartWindow implements Initializable {
         maxInventoryLevelInput = Integer.parseInt(maxField.getText());
         minInventoryLevelInput = Integer.parseInt(minField.getText());
 
+        //calls the alert confirmation message and stores the response to determine whether program should continue
+        boolean confirmationResponse = Utility.saveConfirmationMessage();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initModality(Modality.NONE);
-        alert.setTitle("Save new part");
-        alert.setHeaderText("Saving new part");
-        alert.setContentText("Are you sure you want to save " + partNameInput + "?");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        //create a conditional statements to decide whether to use machineIDInput or companyName input
-        if (isPartInHouse && (result.get() == ButtonType.OK)) {
+        //create a conditional statements to decide whether to use machineIDInput or companyName input, else should exit the function so user can try again without exiting.
+        if (isPartInHouse && confirmationResponse) {
             int machineIDInput = Integer.parseInt(machineIDField.getText());
             Inventory.getAllParts().add(new inHousePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, minInventoryLevelInput, machineIDInput));
         }
 
-        else if (!(isPartInHouse) && result.get() == ButtonType.OK){
+        else if (!(isPartInHouse) && confirmationResponse){
             String companyNameInput = machineIDField.getText();
             Inventory.getAllParts().add(new outsourcePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, maxInventoryLevelInput, companyNameInput));
+        }
+
+        else {
+            return;
         }
 
         //after adding the new part, we need to go back to the main controller

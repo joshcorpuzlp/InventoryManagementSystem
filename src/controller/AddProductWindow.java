@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import model.Inventory;
 import model.Part;
 import model.Product;
+import model.Utility;
 
 
 import java.io.IOException;
@@ -68,20 +69,30 @@ public class AddProductWindow implements Initializable {
         maxInventoryLevel = Integer.parseInt(maxInventoryField.getText());
         minInventoryLevel = Integer.parseInt(minInventoryField.getText());
 
-        //creates a new Product object with identifier currentProduct
-        currentProduct = new Product(productNameInput, productInventoryLevel, productPriceInput, maxInventoryLevel, minInventoryLevel);
+        //calls the alert confirmationMessage and stores the response to determine whether program should continue
+        boolean confirmationMessageResponse = Utility.saveConfirmationMessage();
 
-        //passes currentProduct as the argument for the .addMethod.
-        Inventory.getAllProducts().add(currentProduct);
+        if (confirmationMessageResponse) {
+            //creates a new Product object with identifier currentProduct
+            currentProduct = new Product(productNameInput, productInventoryLevel, productPriceInput, maxInventoryLevel, minInventoryLevel);
 
-        //utilizes the associatedPartsTableviewHolder wiht a for loop to pass each element as an argument
-        //for the .setAssociatedParts method.
-        for (Part part : associatedPartTableViewHolder) {
-            currentProduct.setAssociatedParts(part);
+            //passes currentProduct as the argument for the .addMethod.
+            Inventory.getAllProducts().add(currentProduct);
+
+            //utilizes the associatedPartsTableviewHolder wiht a for loop to pass each element as an argument
+            //for the .setAssociatedParts method.
+            for (Part part : associatedPartTableViewHolder) {
+                currentProduct.setAssociatedParts(part);
+            }
+
+            //calls the returnToMainMen() method.
+            mainMenuWindow.returnToMainMenu(actionEvent);
         }
 
-        //calls the returnToMainMen() method.
-        mainMenuWindow.returnToMainMenu(actionEvent);
+        else {
+            return;
+        }
+
 
     }
 

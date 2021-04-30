@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import model.Inventory;
 import model.Part;
 import model.Product;
+import model.Utility;
 
 
 import java.io.IOException;
@@ -76,25 +77,32 @@ public class ModifyProductWindow implements Initializable{
         maxInventoryLevel = Integer.parseInt(maxInventoryField.getText());
         minInventoryLevel = Integer.parseInt(minInventoryField.getText());
 
-        //edits the currentProduct
-        currentProduct.setProductName(productNameInput);
-        currentProduct.setProductStock(productInventoryLevel);
-        currentProduct.setProductPrice(productPriceInput);
-        currentProduct.setProductMaxInventory(maxInventoryLevel);
-        currentProduct.setProductMinInventory(minInventoryLevel);
 
-        //adds the inputs into the Inventory ObservableList of Products
-//        Inventory.getAllProducts().add(currentProduct);
 
-        //calls on a temporaryHolder of associated views to add and uses an enhanced for loop to add the contents to the current product
-        currentProduct.getAssociatedParts().removeAll();
-        for (Part part : associatedPartTableViewHolder) {
-            currentProduct.setAssociatedParts(part);
+        boolean confirmationResponse = Utility.saveConfirmationMessage();
+
+        if (confirmationResponse) {
+            //edits the currentProduct
+            currentProduct.setProductName(productNameInput);
+            currentProduct.setProductStock(productInventoryLevel);
+            currentProduct.setProductPrice(productPriceInput);
+            currentProduct.setProductMaxInventory(maxInventoryLevel);
+            currentProduct.setProductMinInventory(minInventoryLevel);
+
+            //calls on a temporaryHolder of associated views to add and uses an enhanced for loop to add the contents to the current product
+            currentProduct.getAssociatedParts().removeAll();
+            for (Part part : associatedPartTableViewHolder) {
+                currentProduct.setAssociatedParts(part);
+            }
+
+            //returns to mainMenuWindow
+            mainMenuWindow.returnToMainMenu(actionEvent);
         }
 
+        else {
+            return;
+        }
 
-        //returns to mainMenuWindow
-        mainMenuWindow.returnToMainMenu(actionEvent);
 
     }
 
