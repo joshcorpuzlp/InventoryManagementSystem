@@ -48,7 +48,12 @@ public class AddPartWindow implements Initializable {
     private int machineIDInput;
     private String companyNameInput;
 
-    public void inputValidation(ActionEvent actionEvent) throws  IOException {
+    /**
+     * Method validates the user inputs of the TextFields.
+     * @param actionEvent configured to be run on when save button is pressed.
+     * @throws IOException
+     */
+    public void inputValidation(ActionEvent actionEvent) {
         //retrieve the inputs
         try {
             partNameInput = nameField.getText();
@@ -154,7 +159,12 @@ public class AddPartWindow implements Initializable {
         errorMessageLabel.setText(errorMessageContainer);
         errorMessageContainer = "";
     }
-    //Create a method that will add a new part to the tableview with the addPart window
+
+    /**
+     * Method first calls the validateInputs() method and if inputs are validated, it will save the changes made by the user.
+     * @param actionEvent configured to run when saved button is pressed.
+     * @throws IOException
+     */
     public void saveNewPart(ActionEvent actionEvent) throws IOException {
         inputValidation(actionEvent);
 
@@ -171,19 +181,21 @@ public class AddPartWindow implements Initializable {
         else {
             isInputValid = true;
         }
-
-
-
     }
 
-
-
-    //create a method for the cancel button -- go back to the main menu without saving
+    /**
+     * Handles the cancel button. Returns the mainMenuWindow.
+     * @param actionEvent configured as the cancel button pressed
+     * @throws IOException
+     */
     public void cancelNewPart(ActionEvent actionEvent) throws  IOException{
         mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
-    //create a method that will change the addPartWindow depending on whether the input is "inHouse" or outsourced?
+    /**
+     * Method that determines whether the addPartWindow will add an inHouse Part or outSourced Part class.
+     *
+     */
     public void inHouseOutSource() {
         if (this.partSourceGroup.getSelectedToggle().equals(this.inHouseButton)) {
             inHouseOutSourcedPrompt.setText("Machine ID");
@@ -195,6 +207,11 @@ public class AddPartWindow implements Initializable {
         }
     }
 
+    /**
+     * Initializes the elements within the Add Part Window.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         partIDField.setEditable(false);

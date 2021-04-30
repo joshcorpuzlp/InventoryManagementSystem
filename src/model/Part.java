@@ -11,8 +11,12 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * This creates the Part class.
- * The part class is an abstract class.
+ * Supplied class Part.java
+ */
+
+/**
+ *
+ * @author Joshua Corpuz
  */
 public abstract class Part {
 
@@ -73,34 +77,66 @@ public abstract class Part {
         this.partName = new SimpleStringProperty(partName);
     }
 
+    /**
+     * Method returns the Inventory level of a Part Object
+     * @return returns the Part's Inventory level as an integer value.
+     */
     public int getPartInventoryLevel() {
         return partInventoryLevel;
     }
 
+    /**
+     * This method sets the Part object's inventory level.
+     * @param partInventoryLevel An integer value is passed as an argument.
+     */
     public void setPartInventoryLevel(int partInventoryLevel) {
         this.partInventoryLevel = partInventoryLevel;
     }
 
+    /**
+     * This method returns the maximum inventory level of a Part object.
+     * @return returns the Part's maximum inventory level as an integer value.
+     */
     public int getMaxInventory() {
         return maxInventory;
     }
 
+    /**
+     * This method sets the Part object's maximum inventory level.
+     * @param maxInventory An integer value is passed as an argument.
+     */
     public void setMaxInventory(int maxInventory) {
         this.maxInventory = maxInventory;
     }
 
+    /**
+     * This method returns the minimum inventory level of a Part object.
+     * @return returns the Part's minimum inventory level as an integer value.
+     */
     public int getMinInventory() {
         return minInventory;
     }
 
+    /**
+     * This method sets the Part object's minimum inventory level.
+     * @param minInventory An integer value is passed as an argument.
+     */
     public void setMinInventory(int minInventory) {
         this.minInventory = minInventory;
     }
 
+    /**
+     * This method returns the price of a Part object.
+     * @return returns the Part's price as a double value.
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * This method sets the Part object's price.
+     * @param price A double value is passed as an argument.
+     */
     public void setPrice(double price) {
         this.price = price;
     }

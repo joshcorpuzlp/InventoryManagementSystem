@@ -60,6 +60,10 @@ public class AddProductWindow implements Initializable {
     private int productInventoryLevel, maxInventoryLevelInput, minInventoryLevelInput;
     private double productPriceInput;
 
+    /**
+     * Method validates the user inputs of the TextFields.
+     * @param actionEvent configured to be run on when save button is pressed.
+     */
     public void validateInputs(ActionEvent actionEvent) {
         //retrieve the inputs
         try {
@@ -140,7 +144,11 @@ public class AddProductWindow implements Initializable {
 
     }
 
-
+    /**
+     * Method first calls the validateInputs() method and if inputs are validated, it will save the changes made by the user.
+     * @param actionEvent configured to run when saved button is pressed.
+     * @throws IOException
+     */
     public void saveButtonPressed(ActionEvent actionEvent) throws IOException{
         validateInputs(actionEvent);
 
@@ -166,13 +174,20 @@ public class AddProductWindow implements Initializable {
 
     }
 
+    /**
+     * Handles the cancel button. Returns the mainMenuWindow.
+     * @param actionEvent configured as the cancel button pressed
+     * @throws IOException
+     */
     //Method that uses an ActionEvent(button press) to show the mainMenu.fxml
     public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
         mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
-
-    //method that adds a selected part from the Parts table view into a holder of AssociatedParts
+    /**
+     * method that adds a selected part from the Parts table view into a holder of AssociatedParts
+     * @param actionEvent configured to run when Add associated part button is pressed.
+     */
     public void addAssociatedPart(ActionEvent actionEvent) {
         Part selectedAssociatedPart;
         selectedAssociatedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
@@ -181,7 +196,10 @@ public class AddProductWindow implements Initializable {
         associatedPartsTableView.setItems(associatedPartTableViewHolder);
     }
 
-    //method to remove a selected part from the associatedPartsTableView
+    /**
+     * method to remove a selected part from the associatedPartsTableView
+     * @param actionEvent
+     */
     public void removeAssociatedPart(ActionEvent actionEvent) {
         Part selectedAssociatedPart;
         selectedAssociatedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
@@ -190,7 +208,10 @@ public class AddProductWindow implements Initializable {
         associatedPartsTableView.setItems(associatedPartTableViewHolder);
     }
 
-    //handler that triggers the lookUpPart method
+    /**
+     * handler that triggers the lookUpPart method using the value within the search field as input
+     * @param actionEvent configured to run after the user completes search input and presses enter.
+     */
     public void partSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = partSearchField.getText();
 
@@ -204,7 +225,11 @@ public class AddProductWindow implements Initializable {
         partSearchField.setText("");
 
     }
-    //handler that triggers the lookUpPart method
+
+    /**
+     * handler that triggers the lookUpPart method using the value within the search field as input
+     * @param actionEvent configured to run after the user completes search input and presses enter.
+     */
     public void associatePartSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = associatedPartSearchField.getText();
 
@@ -221,7 +246,11 @@ public class AddProductWindow implements Initializable {
 
 
 
-
+    /**
+     * Initializes the elements within the Add Product Window.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         productIDField.setEditable(false);

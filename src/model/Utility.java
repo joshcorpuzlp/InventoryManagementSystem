@@ -27,6 +27,10 @@ public class Utility {
         return isOK;
     }
 
+    /**
+     * Method used to confirm deletion of item
+     * @return boolean value to proceed or not
+     */
     public static boolean deleteConfirmationMessage() {
         boolean isOK = false;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -42,6 +46,9 @@ public class Utility {
         return isOK;
     }
 
+    /**
+     * Method used to call a warning message.
+     */
     public static void lastItemDeleteMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initModality(Modality.NONE);
@@ -51,6 +58,9 @@ public class Utility {
         alert.showAndWait();
     }
 
+    /**
+     * Method used to call an error message indicating that the user failed to select an item.
+     */
     public static void noItemToDeleteMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initModality(Modality.NONE);
@@ -60,6 +70,9 @@ public class Utility {
         alert.showAndWait();
     }
 
+    /**
+     * Method used to call an error message indicating that product with an associated part can not be deleted.
+     */
     public static void productHasAssociatedPartMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initModality(Modality.NONE);
@@ -69,10 +82,14 @@ public class Utility {
         alert.showAndWait();
     }
 
+    /**
+     * Method used to call an error message indicating that the search produced no results.
+     * @param searchInput utilizes the String input as part of the message.
+     */
     public static void searchProducedNoResults(String searchInput) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initModality(Modality.NONE);
-        alert.setTitle("Part not found");
+        alert.setTitle("Item not found");
         alert.setHeaderText("Search produced no results.");
         alert.setContentText("\"" + searchInput +"\""  +" found no results.");
         alert.showAndWait();

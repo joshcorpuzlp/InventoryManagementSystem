@@ -70,12 +70,19 @@ public class ModifyProductWindow implements Initializable{
     private double productPriceInput;
 
 
-
-
+    /**
+     * Handles the cancel button. Returns the mainMenuWindow.
+     * @param actionEvent configured as the cancel button pressed
+     * @throws IOException
+     */
     public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
         mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
+    /**
+     * Method validates the user inputs of the TextFields.
+     * @param actionEvent configured to be run on when save button is pressed.
+     */
     public void validateInputs(ActionEvent actionEvent) {
         //retrieve the inputs
         try {
@@ -155,6 +162,11 @@ public class ModifyProductWindow implements Initializable{
         errorMessageContainer = "";
     }
 
+    /**
+     * Method first calls the validateInputs() method and if inputs are validated, it will save the changes made by the user.
+     * @param actionEvent configured to run when saved button is pressed.
+     * @throws IOException
+     */
     public void saveButtonPressed(ActionEvent actionEvent) throws IOException{
 
         validateInputs(actionEvent);
@@ -176,7 +188,10 @@ public class ModifyProductWindow implements Initializable{
         }
     }
 
-    //method that adds a selected part from the Parts table view into a holder of AssociatedParts
+    /**
+     * Method that adds a selected part from the Parts table view into a holder of AssociatedParts
+     * @param actionEvent configured to run when the add button is pressed.
+     */
     public void addAssociatedPart(ActionEvent actionEvent) {
         Part selectedAssociatedPart;
         selectedAssociatedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
@@ -185,7 +200,10 @@ public class ModifyProductWindow implements Initializable{
         associatedPartsTableView.setItems(associatedPartTableViewHolder);
     }
 
-    //method to remove a selected part from the associatedPartsTableView
+    /**
+     * Method that removes a selected part from the associatedPartsTableView
+     * @param actionEvent configured to run when the remove button is pressed.
+     */
     public void removeAssociatedPart(ActionEvent actionEvent) {
         Part selectedAssociatedPart;
         selectedAssociatedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
@@ -194,7 +212,10 @@ public class ModifyProductWindow implements Initializable{
         associatedPartsTableView.setItems(associatedPartTableViewHolder);
     }
 
-    //handler that triggers the lookUpPart method
+    /**
+     * handler that triggers the lookUpPart method using the value within the search field as input
+     * @param actionEvent configured to run after the user completes search input and presses enter.
+     */
     public void partSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = partSearchField.getText();
 
@@ -208,7 +229,10 @@ public class ModifyProductWindow implements Initializable{
         partSearchField.setText("");
 
     }
-    //handler that triggers the lookUpPart method
+    /**
+     * handler that triggers the lookUpPart method using the value within the search field as input
+     * @param actionEvent configured to run after the user completes search input and presses enter.
+     */
     public void associatePartSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = associatedPartSearchField.getText();
 
@@ -224,7 +248,11 @@ public class ModifyProductWindow implements Initializable{
     }
 
 
-
+    /**
+     * Initializes the elements within the Modify Product Window.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         productIDField.setEditable(false);

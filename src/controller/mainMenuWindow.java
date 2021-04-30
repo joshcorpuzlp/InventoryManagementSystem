@@ -99,7 +99,11 @@ public class mainMenuWindow implements Initializable {
 
     }
 
-    //Opens that addPartWindow
+    /**
+     * Opens the AddPartWindow
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addPartButtonPressed(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../view/AddPartWindow.fxml"));
         Scene addPartWindowScene = new Scene(root);
@@ -109,7 +113,10 @@ public class mainMenuWindow implements Initializable {
         window.show();
     }
 
-    //selects the item from the partsTableView and then deletes
+    /**
+     * selects the item from the partsTableView and then deletes
+     * @param actionEvent
+     */
     public void deletePartButton(ActionEvent actionEvent) {
         Part selectedPart;
         selectedPart = partsTableView.getSelectionModel().getSelectedItem();
@@ -134,7 +141,11 @@ public class mainMenuWindow implements Initializable {
 
     }
 
-    //method to retrieve the selected Parts object from the table view then calls the modifyPart button
+    /**
+     * method to retrieve the selected Parts object from the table view then opens the Modify Part Window
+     * @param actionEvent configured to run when modify part button is pressed.
+     * @throws IOException
+     */
     public void modifyPartButton(ActionEvent actionEvent) throws IOException {
         int selectedIndex;
         selectedIndex = partsTableView.getSelectionModel().getFocusedIndex();
@@ -151,7 +162,10 @@ public class mainMenuWindow implements Initializable {
     }
 
 
-    //handler that triggers the lookUpPart method
+    /**
+     * handler that triggers the lookUpPart method using the value within the search field as input
+     * @param actionEvent configured to run after the user completes search input and presses enter.
+     */
     public void partSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = partSearchField.getText();
 
@@ -171,7 +185,10 @@ public class mainMenuWindow implements Initializable {
 
     }
 
-    //handler that triggers the lookUpPart method
+    /**
+     * handler that triggers the lookUpProduct method using the value within the search field as input
+     * @param actionEvent configured to run after the user completes search input and presses enter.
+     */
     public void productSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = productSearchField.getText();
 
@@ -186,7 +203,11 @@ public class mainMenuWindow implements Initializable {
 
     }
 
-    //selects the item from the partsTableView and then deletes
+    /**
+     * selects the item from the partsTableView and then deletes
+     * @param actionEvent configured to run when the delete product button is pressed.
+     * @throws IOException
+     */
     public void deleteProductButton(ActionEvent actionEvent) throws IOException {
         Product selectedProduct;
         selectedProduct = productTableView.getSelectionModel().getSelectedItem();
@@ -217,8 +238,11 @@ public class mainMenuWindow implements Initializable {
 
     }
 
-    //method triggered by addProduct Button
-    public void addProductButtonPressed(ActionEvent actionEvent) throws IOException {
+    /**
+     * Opens the Add Product Window.
+     * @param actionEvent configured to run whe the add product button is pressed.
+     * @throws IOException
+     */    public void addProductButtonPressed(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../view/addProductWindow.fxml"));
         Scene addPartWindowScene = new Scene(root);
 
@@ -227,7 +251,11 @@ public class mainMenuWindow implements Initializable {
         window.show();
     }
 
-    //method to retrieve the selected Product object from the table view then calls the modifyPart button
+    /**
+     * method to retrieve the selected Product object from the table view then opens the modify product window.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void modifyProductButton(ActionEvent actionEvent) throws IOException {
         int selectedIndex;
         selectedIndex = productTableView.getSelectionModel().getFocusedIndex();
@@ -243,7 +271,9 @@ public class mainMenuWindow implements Initializable {
 
     }
 
-    //method to return to main menu, created to be reusable in other controllers.
+    /**
+     * Method to return to main menu, created to be reusable in other controllers.
+     */
     public static void returnToMainMenu(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(mainMenuWindow.class.getResource("../view/mainMenu.fxml"));
         Scene mainControllerScene = new Scene(root);

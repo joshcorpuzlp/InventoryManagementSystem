@@ -65,7 +65,11 @@ public class ModifyPartWindow implements Initializable {
     private boolean isInputValid = true;
     private String errorMessageContainer = "";
 
-
+    /**
+     * Method validates the user inputs of the TextFields.
+     * @param actionEvent configured to be run on when save button is pressed.
+     * @throws IOException
+     */
     public void inputValidation(ActionEvent actionEvent) throws  IOException {
         //retrieve the inputs
         try {
@@ -164,6 +168,11 @@ public class ModifyPartWindow implements Initializable {
         errorMessageContainer = "";
     }
 
+    /**
+     * Method first calls the validateInputs() method and if inputs are validated, it will save the changes made by the user.
+     * @param actionEvent configured to run when saved button is pressed.
+     * @throws IOException
+     */
     public void saveModifications(ActionEvent actionEvent) throws IOException{
         //declaring variables to hold inputs, redundant but done to maintain readability
         Part updatedInfo;
@@ -196,13 +205,19 @@ public class ModifyPartWindow implements Initializable {
 
 
 
-
-    //create a method for the cancel button -- go back to the main menu without saving part modification
+    /**
+     * Handles the cancel button. Returns the mainMenuWindow.
+     * @param actionEvent configured as the cancel button pressed
+     * @throws IOException
+     */
     public void cancelModificationPart(ActionEvent actionEvent) throws IOException {
         mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
-    //create a method that will change the addPartWindow depending on whether the input is "inhouse" or outsourced?
+    /**
+     * Method that determines whether the addPartWindow will add an inHouse Part or outSourced Part class.
+     *
+     */
     public void inHouseOutSource() {
         if (this.partSourceGroup.getSelectedToggle().equals(this.inHouseButton)) {
             inHouseOutSourcedPrompt.setText("Machine ID");
@@ -215,8 +230,11 @@ public class ModifyPartWindow implements Initializable {
 
     }
 
-
-
+    /**
+     * Initializes the elements within the Add Part Window.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         partIDField.setEditable(false);
