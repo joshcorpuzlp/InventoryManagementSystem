@@ -151,11 +151,11 @@ public class mainMenuWindow implements Initializable {
     }
 
 
-    //handler that triggers the searchByPartName method
+    //handler that triggers the lookUpPart method
     public void partSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = partSearchField.getText();
 
-        ObservableList<Part> foundParts = searchByPartName(searchInput);
+        ObservableList<Part> foundParts = lookUpPart(searchInput);
         partsTableView.setItems(foundParts);
 
         //shows alert message if searchinput produced 0 results.
@@ -171,21 +171,16 @@ public class mainMenuWindow implements Initializable {
 
     }
 
-    //handler that triggers the searchByPartName method
+    //handler that triggers the lookUpPart method
     public void productSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = productSearchField.getText();
 
-        ObservableList<Product> foundProducts = searchByProductName(searchInput);
+        ObservableList<Product> foundProducts = lookUpProduct(searchInput);
         productTableView.setItems(foundProducts);
 
         //shows alert message if searchinput produced 0 results.
         if (productTableView.getItems().size() == 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initModality(Modality.NONE);
-            alert.setTitle("Product not found");
-            alert.setHeaderText("Search produced no results.");
-            alert.setContentText("\"" + searchInput +"\""  +" found no results.");
-            alert.showAndWait();
+            Utility.searchProducedNoResults(searchInput);
         }
         productSearchField.setText("");
 

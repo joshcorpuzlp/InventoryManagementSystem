@@ -43,9 +43,9 @@
             <Label text="Max Inventory Level" GridPane.rowIndex="4" />
             <TextField fx:id="productIDField" GridPane.columnIndex="1" />
             <TextField fx:id="productNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="inventoryLevelField" onKeyTyped="#validateInventoryInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="productPriceField" onKeyTyped="#validatePriceInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="maxInventoryField" onKeyTyped="#validateMaxInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="inventoryLevelField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="productPriceField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="maxInventoryField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <GridPane layoutX="278.0" layoutY="63.0" prefHeight="209.0" prefWidth="234.0">
@@ -62,7 +62,7 @@
          </rowConstraints>
          <children>
             <Label text="Min Inventory Level" GridPane.rowIndex="4" />
-            <TextField fx:id="minInventoryField" onKeyTyped="#validateMinInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="minInventoryField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <HBox alignment="BOTTOM_RIGHT" layoutX="959.0" layoutY="741.0" prefHeight="33.0" prefWidth="200.0" spacing="25.0">

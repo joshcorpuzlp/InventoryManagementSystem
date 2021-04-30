@@ -168,6 +168,9 @@ public class AddPartWindow implements Initializable {
             //after adding the new part, we need to go back to the main controller
             mainMenuWindow.returnToMainMenu(actionEvent);
         }
+        else {
+            isInputValid = true;
+        }
 
 
 

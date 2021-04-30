@@ -6,11 +6,13 @@ import javafx.collections.ObservableList;
 import java.util.Locale;
 
 public class Inventory {
+
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+
 
     //flag variable needed for disableInitializeDataSet()
     private static boolean isFirstTime = true;
-    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     //Method to add a part object into the private static data member allParts @param is a Parts object.
     public static void addPart(Part part) {
@@ -19,6 +21,10 @@ public class Inventory {
 
     public static void updatePart(int index, Part selectedPart) {
         allParts.set(index, selectedPart);
+    }
+
+    public static void updateProduct(int index, Product selectedProduct) {
+        allProducts.set(index, selectedProduct);
     }
 
     public static void deletePart(Part part) {
@@ -49,7 +55,7 @@ public class Inventory {
 
     //Method that first checks if the input is String or an int. Then, it will check each element of the allParts array and add the matches to
     //another ObservableList called foundPartNames and return that to be shown as the new contents of the partsTableView
-    public static ObservableList<Part> searchByPartName(String searchInput) {
+    public static ObservableList<Part> lookUpPart(String searchInput) {
         ObservableList<Part> foundPartNames = FXCollections.observableArrayList();
         boolean isText = true;
         if (searchInput.matches(".*\\d.*")) {
@@ -79,9 +85,6 @@ public class Inventory {
         return foundPartNames;
     }
 
-
-
-
     public static void addProduct(Product product) {
         allProducts.add(product);
     }
@@ -101,7 +104,7 @@ public class Inventory {
 
     //Method that first checks if the input is String or an int. Then, it will check each element of the allParts array and add the matches to
     //another ObservableList called foundPartNames and return that to be shown as the new contents of the partsTableView
-    public static ObservableList<Product> searchByProductName(String searchInput) {
+    public static ObservableList<Product> lookUpProduct(String searchInput) {
         ObservableList<Product> foundProductNames = FXCollections.observableArrayList();
         boolean isText = true;
         if (searchInput.matches(".*\\d.*")) {

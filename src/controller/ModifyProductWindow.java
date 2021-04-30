@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import model.Inventory;
 import model.Part;
@@ -16,10 +15,11 @@ import model.Utility;
 
 
 import java.io.IOException;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static model.Inventory.searchByPartName;
+import static model.Inventory.lookUpPart;
 
 public class ModifyProductWindow implements Initializable{
 
@@ -55,14 +55,22 @@ public class ModifyProductWindow implements Initializable{
         return productIndexNumber;
     }
 
-    //configure the errorMessageLabel
-    @FXML private Label errorMessageLabel;
-
     //configure the partSearchField
     @FXML TextField partSearchField;
 
     //configure the associatedPartSearchField
     @FXML TextField associatedPartSearchField;
+
+    //configure error message label
+    @FXML private Label errorMessageLabel;
+    private String errorMessageContainer = "";
+    boolean isInputValid = true;
+
+    //variables to hold textField inputs
+    private String productNameInput;
+    private int productInventoryLevel, maxInventoryLevelInput, minInventoryLevelInput;
+    private double productPriceInput;
+
 
 
 
@@ -70,45 +78,104 @@ public class ModifyProductWindow implements Initializable{
         mainMenuWindow.returnToMainMenu(actionEvent);
     }
 
-    public void saveButtonPressed(ActionEvent actionEvent) throws IOException{
-        String productNameInput;
-        int productInventoryLevel, maxInventoryLevel, minInventoryLevel;
-        double productPriceInput;
+    public void validateInputs(ActionEvent actionEvent) {
+        //retrieve the inputs
+        try {
+            productNameInput = productNameField.getText();
+            if (productNameInput.equals("")) {
+                throw new myExceptions("Product Name: Enter a string.\n");
+            }
+        }
+        catch (myExceptions ex) {
+            errorMessageContainer += ex.getMessage();
+            isInputValid = false;
+        }
 
-        //retrieve textField inputs
-        productNameInput = productNameField.getText();
-        productInventoryLevel = Integer.parseInt(inventoryLevelField.getText());
-        productPriceInput = Double.parseDouble(productPriceField.getText());
-        maxInventoryLevel = Integer.parseInt(maxInventoryField.getText());
-        minInventoryLevel = Integer.parseInt(minInventoryField.getText());
+        try {
+            productInventoryLevel = Integer.parseInt(inventoryLevelField.getText());
+            if (inventoryLevelField.getText().equals("")) {
+                throw new myExceptions("Inventory level: enter a number greater than 0.\n");
+            }
+            if (productInventoryLevel <= 0) {
+                throw new myExceptions("Inventory level: enter a number greater than 0.\n");
+            }
+        }
+        catch (NumberFormatException ex) {
+            errorMessageContainer += "Inventory level: enter a positive whole number.\n";
+            isInputValid = false;
 
+        }
+        catch (myExceptions stockValidation) {
+            errorMessageContainer += stockValidation.getMessage();
+            isInputValid = false;
 
+        }
 
-        boolean confirmationResponse = Utility.saveConfirmationMessage();
+        try {
+            productPriceInput = Double.parseDouble(productPriceField.getText());
+            if (productPriceField.getText().equals("")) {
+                throw new myExceptions("Price field: enter a value..\n");
+            }
+            if (productPriceInput <= 0) {
+                throw new myExceptions("Price field: enter a value greater than 0.\n");
+            }
+        }
+        catch (myExceptions priceValidation) {
+            errorMessageContainer += priceValidation.getMessage();
+            isInputValid = false;
 
-        if (confirmationResponse) {
-            //edits the currentProduct
-            currentProduct.setProductName(productNameInput);
-            currentProduct.setProductStock(productInventoryLevel);
-            currentProduct.setProductPrice(productPriceInput);
-            currentProduct.setProductMaxInventory(maxInventoryLevel);
-            currentProduct.setProductMinInventory(minInventoryLevel);
+        }
+        catch (NumberFormatException ex) {
+            errorMessageContainer += "Price field: enter a positive number. Your input can contain decimals. \n";
+            isInputValid = false;
 
-            //calls on a temporaryHolder of associated views to add and uses an enhanced for loop to add the contents to the current product
-            currentProduct.getAssociatedParts().removeAll();
-            for (Part part : associatedPartTableViewHolder) {
-                currentProduct.setAssociatedParts(part);
+        }
+
+        try {
+            maxInventoryLevelInput = Integer.parseInt(maxInventoryField.getText());
+            minInventoryLevelInput = Integer.parseInt(minInventoryField.getText());
+            if (maxInventoryField.getText().equals("") || minInventoryField.getText().equals("")) {
+                throw new myExceptions("Min and Max fields: enter values for the minimum and maximum inventory fields.\n");
+            }
+            if (maxInventoryLevelInput < minInventoryLevelInput) {
+                throw new myExceptions("Max inventory MUST be larger than the minimum inventory.\n");
             }
 
+        }
+        catch (NumberFormatException ex) {
+            errorMessageContainer += "Min and Max fields: enter a positive whole number.\n";
+            isInputValid = false;
+
+        }
+        catch (myExceptions minMaxValidation) {
+            errorMessageContainer += minMaxValidation.getMessage();
+            isInputValid = false;
+
+        }
+
+        errorMessageLabel.setText(errorMessageContainer);
+        errorMessageContainer = "";
+    }
+
+    public void saveButtonPressed(ActionEvent actionEvent) throws IOException{
+
+        validateInputs(actionEvent);
+        Product modifiedProduct = new Product(productNameInput, productInventoryLevel, productPriceInput, maxInventoryLevelInput, minInventoryLevelInput);
+
+        if (isInputValid) {
+            Inventory.updateProduct(getProductIndexNumber(), modifiedProduct);
+
+            //calls on a temporaryHolder of associated views to add and uses an enhanced for loop to add the contents to the current product
+            modifiedProduct.getAssociatedParts().removeAll();
+            for (Part part : associatedPartTableViewHolder) {
+                modifiedProduct.setAssociatedParts(part);
+            }
             //returns to mainMenuWindow
             mainMenuWindow.returnToMainMenu(actionEvent);
         }
-
         else {
-            return;
+            isInputValid = true;
         }
-
-
     }
 
     //method that adds a selected part from the Parts table view into a holder of AssociatedParts
@@ -129,42 +196,32 @@ public class ModifyProductWindow implements Initializable{
         associatedPartsTableView.setItems(associatedPartTableViewHolder);
     }
 
-    //handler that triggers the searchByPartName method
+    //handler that triggers the lookUpPart method
     public void partSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = partSearchField.getText();
 
-        ObservableList<Part> foundParts = searchByPartName(searchInput);
+        ObservableList<Part> foundParts = lookUpPart(searchInput);
         partsTableView.setItems(foundParts);
 
         //shows alert message if searchInput produced 0 results.
         if (partsTableView.getItems().size() == 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initModality(Modality.NONE);
-            alert.setTitle("Part not found");
-            alert.setHeaderText("Search produced no results.");
-            alert.setContentText("\"" + searchInput +"\""  +" found no results.");
-            alert.showAndWait();
+            Utility.searchProducedNoResults(searchInput);
         }
         partSearchField.setText("");
 
     }
-    //handler that triggers the searchByPartName method
+    //handler that triggers the lookUpPart method
     public void associatePartSearchFieldTrigger(ActionEvent actionEvent) {
         String searchInput = associatedPartSearchField.getText();
 
-        ObservableList<Part> foundParts = searchByPartName(searchInput);
+        ObservableList<Part> foundParts = lookUpPart(searchInput);
         associatedPartsTableView.setItems(foundParts);
 
         //shows alert message if searchInput produced 0 results.
-        if (partsTableView.getItems().size() == 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initModality(Modality.NONE);
-            alert.setTitle("Part not found");
-            alert.setHeaderText("Search produced no results.");
-            alert.setContentText("\"" + searchInput +"\""  +" found no results.");
-            alert.showAndWait();
+        if (associatedPartsTableView.getItems().size() == 0) {
+            Utility.searchProducedNoResults(searchInput);
         }
-        partSearchField.setText("");
+        associatedPartSearchField.setText("");
 
     }
 

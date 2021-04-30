@@ -178,18 +178,20 @@ public class ModifyPartWindow implements Initializable {
                 Inventory.updatePart(getPartIndexNumber(), updatedInfo);
                 //return to mainMenuWindow
                 mainMenuWindow.returnToMainMenu(actionEvent);
-
             }
 
-            if (!isPartInHouse && isInputValid) {
-                updatedInfo = new outsourcePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, maxInventoryLevelInput, companyNameInput);
+            else if (!(isPartInHouse) && isInputValid) {
+                updatedInfo = new outsourcePart(partNameInput, inventoryInput, priceInput, maxInventoryLevelInput, minInventoryLevelInput, companyNameInput);
 
                 //updates a specific element with the updatedInfo
                 Inventory.updatePart(getPartIndexNumber(), updatedInfo);
                 //return to mainMenuWindow
                 mainMenuWindow.returnToMainMenu(actionEvent);
             }
-        }
+            else {
+                isInputValid = true;
+            }
+    }
 
 
 
