@@ -55,7 +55,6 @@ public class AddPartWindow implements Initializable {
      * The inputValidation method allowed the program to circumvent unwanted inputted errors and allow the user to try again.
      * The method would also produce a message instructing the user what a proper input would be like.
      * @param actionEvent configured to be run on when save button is pressed.
-     * @throws IOException
      */
     public void inputValidation(ActionEvent actionEvent) {
         //retrieve the inputs
