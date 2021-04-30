@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import model.Inventory;
 import model.Part;
 import model.Product;
@@ -117,7 +116,7 @@ public class AddProductWindow implements Initializable {
         try {
             maxInventoryLevelInput = Integer.parseInt(maxInventoryField.getText());
             minInventoryLevelInput = Integer.parseInt(minInventoryField.getText());
-            if (maxInventoryField.getText().equals("") || minInventoryField.getText().equals("")) {
+            if (maxInventoryField.getText().equals("") || minInventoryField.getText().equals("") || maxInventoryLevelInput <= 0 || minInventoryLevelInput <= 0) {
                 throw new myExceptions("Min and Max fields: enter values for the minimum and maximum inventory fields.\n");
             }
             if (maxInventoryLevelInput < minInventoryLevelInput) {
@@ -153,9 +152,9 @@ public class AddProductWindow implements Initializable {
             Inventory.getAllProducts().add(currentProduct);
 
             //utilizes the associatedPartsTableviewHolder wiht a for loop to pass each element as an argument
-            //for the .setAssociatedParts method.
+            //for the .addAssociatedPart method.
             for (Part part : associatedPartTableViewHolder) {
-                currentProduct.setAssociatedParts(part);
+                currentProduct.addAssociatedPart(part);
             }
 
             //calls the returnToMainMen() method.

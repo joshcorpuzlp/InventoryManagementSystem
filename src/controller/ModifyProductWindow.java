@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import model.Inventory;
 import model.Part;
 import model.Product;
@@ -15,7 +14,6 @@ import model.Utility;
 
 
 import java.io.IOException;
-import java.lang.reflect.UndeclaredThrowableException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -134,7 +132,7 @@ public class ModifyProductWindow implements Initializable{
         try {
             maxInventoryLevelInput = Integer.parseInt(maxInventoryField.getText());
             minInventoryLevelInput = Integer.parseInt(minInventoryField.getText());
-            if (maxInventoryField.getText().equals("") || minInventoryField.getText().equals("")) {
+            if (maxInventoryField.getText().equals("") || minInventoryField.getText().equals("") || maxInventoryLevelInput <= 0 || minInventoryLevelInput <= 0) {
                 throw new myExceptions("Min and Max fields: enter values for the minimum and maximum inventory fields.\n");
             }
             if (maxInventoryLevelInput < minInventoryLevelInput) {
@@ -168,7 +166,7 @@ public class ModifyProductWindow implements Initializable{
             //calls on a temporaryHolder of associated views to add and uses an enhanced for loop to add the contents to the current product
             modifiedProduct.getAssociatedParts().removeAll();
             for (Part part : associatedPartTableViewHolder) {
-                modifiedProduct.setAssociatedParts(part);
+                modifiedProduct.addAssociatedPart(part);
             }
             //returns to mainMenuWindow
             mainMenuWindow.returnToMainMenu(actionEvent);

@@ -104,7 +104,7 @@ public class AddPartWindow implements Initializable {
         try {
             maxInventoryLevelInput = Integer.parseInt(maxField.getText());
             minInventoryLevelInput = Integer.parseInt(minField.getText());
-            if (maxField.getText().equals("") || minField.getText().equals("")) {
+            if (maxField.getText().equals("") || minField.getText().equals("") || maxInventoryLevelInput <= 0 || minInventoryLevelInput <= 0) {
                 throw new myExceptions("Min and Max fields: enter values for the minimum and maximum inventory fields.\n");
             }
             if (maxInventoryLevelInput < minInventoryLevelInput) {

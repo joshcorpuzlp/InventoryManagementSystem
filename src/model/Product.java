@@ -25,9 +25,6 @@ public class Product {
         return associatedParts;
     }
 
-    public void setAssociatedParts(Part part) {
-        associatedParts.add(part);
-    }
 
     public int getProductID() {
         return productID;
@@ -77,5 +74,16 @@ public class Product {
         this.productPrice = productPrice;
     }
 
+    public void addAssociatedPart(Part part) {
+        associatedParts.add(part);
+    }
+
+    public void setAssociatedParts(ObservableList<Part> associatedParts) {
+        this.associatedParts = associatedParts;
+    }
+
+    public void deleteAssociatedPart(Part part) {
+        associatedParts.remove(part);
+    }
 
 }
