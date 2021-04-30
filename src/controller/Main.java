@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 /**
  * This class creates the Inventory Management Application
+ * FUTURE ENHANCEMENTS - One big enhancement that this application could implement would be to improve the aesthetic and
+ * feel the GUI. Another update that would make the application truly powerful is if the initialized dataset and the inventory class could be saved in disk.
  */
 public class Main extends Application {
 

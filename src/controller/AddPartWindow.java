@@ -50,6 +50,10 @@ public class AddPartWindow implements Initializable {
 
     /**
      * Method validates the user inputs of the TextFields.
+     * RUNTIME ERROR - without the inputValidation method, the application would throw exceptions whenever an
+     * invalid input, such as letters where the input is parsed to int, and would cause the project to not run properly.
+     * The inputValidation method allowed the program to circumvent unwanted inputted errors and allow the user to try again.
+     * The method would also produce a message instructing the user what a proper input would be like.
      * @param actionEvent configured to be run on when save button is pressed.
      * @throws IOException
      */
