@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
@@ -42,6 +44,42 @@ public class AddPartWindow implements Initializable {
     //configure the MachineID or Source Company to change labels
     @FXML private Label inHouseOutSourcedPrompt;
     private boolean isPartInHouse = false;
+
+
+
+
+    public void validateInventoryInput(KeyEvent keyEvent) { ;
+        Utility.validIntInput(inventoryLevelField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validateMaxInput(KeyEvent keyEvent) { ;
+        Utility.validIntInput(maxField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validateMinInput(KeyEvent keyEvent) { ;
+        Utility.validIntInput(minField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validatePriceInput(KeyEvent keyEvent) {
+        Utility.validDoubleInput(priceField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+
+    }
+
+    public void validateInHouseInput(KeyEvent keyEvent) {
+        if (isPartInHouse) {
+            Utility.validIntInput(machineIDField.getText());
+            errorMessageLabel.setText(Utility.getErrorMessage());
+            Utility.resetErrorMessage();
+        }
+    }
 
 
     //Create a method that will add a new part to the tableview with the addPart window
@@ -112,5 +150,6 @@ public class AddPartWindow implements Initializable {
         this.outSourcedButton.setToggleGroup(partSourceGroup);
         partSourceGroup.selectToggle(inHouseButton);
 
+        errorMessageLabel.setText("");
     }
 }
