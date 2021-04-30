@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import model.Inventory;
 import model.Part;
@@ -54,12 +55,42 @@ public class ModifyProductWindow implements Initializable{
         return productIndexNumber;
     }
 
+    //configure the errorMessageLabel
+    @FXML private Label errorMessageLabel;
+
     //configure the partSearchField
     @FXML TextField partSearchField;
 
     //configure the associatedPartSearchField
     @FXML TextField associatedPartSearchField;
 
+
+    public void validateInventoryInput(KeyEvent keyEvent) {
+        Utility.validIntInput(inventoryLevelField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+
+    }
+
+    public void validateMaxInput(KeyEvent keyEvent) {
+
+        Utility.validIntInput(maxInventoryField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validateMinInput(KeyEvent keyEvent) {
+        Utility.validIntInput(minInventoryField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validatePriceInput(KeyEvent keyEvent) {
+        Utility.validDoubleInput(productPriceField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+
+    }
 
     public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
         mainMenuWindow.returnToMainMenu(actionEvent);
@@ -208,6 +239,7 @@ public class ModifyProductWindow implements Initializable{
         maxInventoryField.setText(Integer.toString(currentProduct.getProductMaxInventory()));
         minInventoryField.setText(Integer.toString(currentProduct.getProductMinInventory()));
 
+        errorMessageLabel.setText("");
     }
 
 }

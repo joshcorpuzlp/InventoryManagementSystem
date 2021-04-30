@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import model.Inventory;
 import model.Part;
@@ -45,14 +46,45 @@ public class AddProductWindow implements Initializable {
     private ObservableList<Part> associatedPartTableViewHolder = FXCollections.observableArrayList();
 
     //configure the partSearchField
-    @FXML TextField partSearchField;
+    @FXML private TextField partSearchField;
 
     //configure the associatedPartSearchField
-    @FXML TextField associatedPartSearchField;
+    @FXML private TextField associatedPartSearchField;
 
-    //Method that uses an ActionEvent(button press) to show the mainMenu.fxm
+    //configure error message label
+    @FXML private Label errorMessageLabel;
 
 
+
+    public void validateInventoryInput(KeyEvent keyEvent) {
+        Utility.validIntInput(inventoryLevelField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+
+    }
+
+    public void validateMaxInput(KeyEvent keyEvent) {
+
+        Utility.validIntInput(maxInventoryField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validateMinInput(KeyEvent keyEvent) {
+        Utility.validIntInput(minInventoryField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validatePriceInput(KeyEvent keyEvent) {
+        Utility.validDoubleInput(productPriceField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+
+    }
+
+
+    //Method that uses an ActionEvent(button press) to show the mainMenu.fxml
     public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
         mainMenuWindow.returnToMainMenu(actionEvent);
     }
@@ -186,6 +218,6 @@ public class AddProductWindow implements Initializable {
         associatedPartsTableView.setEditable(true);
         associatedPartsTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-
+        errorMessageLabel.setText("");
     }
 }

@@ -186,6 +186,6 @@ public class ModifyPartWindow implements Initializable {
             partSourceGroup.selectToggle(outSourcedButton);
         }
 
-
+        errorMessageLabel.setText("");
     }
 }

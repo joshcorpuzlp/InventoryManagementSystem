@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 
-import java.awt.font.NumericShaper;
 import java.util.Optional;
 
 public class Utility {
