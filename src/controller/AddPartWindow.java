@@ -48,19 +48,21 @@ public class AddPartWindow implements Initializable {
 
 
 
-    public void validateInventoryInput(KeyEvent keyEvent) { ;
+    public void validateInventoryInput(KeyEvent keyEvent) {
         Utility.validIntInput(inventoryLevelField.getText());
         errorMessageLabel.setText(Utility.getErrorMessage());
         Utility.resetErrorMessage();
+
     }
 
-    public void validateMaxInput(KeyEvent keyEvent) { ;
+    public void validateMaxInput(KeyEvent keyEvent) {
+
         Utility.validIntInput(maxField.getText());
         errorMessageLabel.setText(Utility.getErrorMessage());
         Utility.resetErrorMessage();
     }
 
-    public void validateMinInput(KeyEvent keyEvent) { ;
+    public void validateMinInput(KeyEvent keyEvent) {
         Utility.validIntInput(minField.getText());
         errorMessageLabel.setText(Utility.getErrorMessage());
         Utility.resetErrorMessage();

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import model.*;
 
 import java.io.IOException;
@@ -51,6 +52,41 @@ public class ModifyPartWindow implements Initializable {
     }
     public static int getPartIndexNumber() {
         return partIndexNumber;
+    }
+
+    public void validateInventoryInput(KeyEvent keyEvent) {
+        Utility.validIntInput(inventoryLevelField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+
+    }
+
+    public void validateMaxInput(KeyEvent keyEvent) {
+
+        Utility.validIntInput(maxField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validateMinInput(KeyEvent keyEvent) {
+        Utility.validIntInput(minField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+    }
+
+    public void validatePriceInput(KeyEvent keyEvent) {
+        Utility.validDoubleInput(priceField.getText());
+        errorMessageLabel.setText(Utility.getErrorMessage());
+        Utility.resetErrorMessage();
+
+    }
+
+    public void validateInHouseInput(KeyEvent keyEvent) {
+        if (isPartInHouse) {
+            Utility.validIntInput(machineIDField.getText());
+            errorMessageLabel.setText(Utility.getErrorMessage());
+            Utility.resetErrorMessage();
+        }
     }
 
 
