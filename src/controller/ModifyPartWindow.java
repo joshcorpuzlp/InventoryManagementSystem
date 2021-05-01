@@ -83,24 +83,6 @@ public class ModifyPartWindow implements Initializable {
         }
 
         try {
-            inventoryInput = Integer.parseInt(inventoryLevelField.getText());
-            if (inventoryLevelField.getText().equals("")) {
-                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
-            }
-            if (inventoryInput <= 0) {
-                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
-            }
-        } catch (NumberFormatException ex) {
-            errorMessageContainer += "Inventory field: enter a positive whole number.\n";
-            isInputValid = false;
-
-        } catch (myExceptions stockValidation) {
-            errorMessageContainer += stockValidation.getMessage();
-            isInputValid = false;
-
-        }
-
-        try {
             priceInput = Double.parseDouble(priceField.getText());
             if (priceField.getText().equals("")) {
                 throw new myExceptions("Price field: enter a value..\n");
@@ -135,6 +117,26 @@ public class ModifyPartWindow implements Initializable {
 
         } catch (myExceptions minMaxValidation) {
             errorMessageContainer += minMaxValidation.getMessage();
+            isInputValid = false;
+        }
+
+        try {
+            inventoryInput = Integer.parseInt(inventoryLevelField.getText());
+            if (inventoryLevelField.getText().equals("")) {
+                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
+            }
+            if (inventoryInput <= 0) {
+                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
+            }
+            if (inventoryInput > maxInventoryLevelInput || inventoryInput < minInventoryLevelInput) {
+                throw new myExceptions("Inventory field: value must be between min and max.\n");
+            }
+        } catch (NumberFormatException ex) {
+            errorMessageContainer += "Inventory field: enter a positive whole number.\n";
+            isInputValid = false;
+
+        } catch (myExceptions stockValidation) {
+            errorMessageContainer += stockValidation.getMessage();
             isInputValid = false;
 
         }

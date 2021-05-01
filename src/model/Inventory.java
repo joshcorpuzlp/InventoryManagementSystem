@@ -73,9 +73,9 @@ public class Inventory {
      */
     public static void initializeDataSet() {
         if (isFirstTime) {
-            addPart(new outsourcePart("Magic Keyboard", 100, 69.99, 10, 5, "Apple"));
-            addPart(new outsourcePart("Magic Trackpad", 10, 59.99, 10, 5, "Apple"));
-            addPart(new inHousePart("USB C Charger", 10, 10.99, 10, 5, 1012));
+            addPart(new outsourcePart("Magic Keyboard", 100, 69.99, 200, 5, "Apple"));
+            addPart(new outsourcePart("Magic Trackpad", 100, 59.99, 150, 5, "Apple"));
+            addPart(new inHousePart("USB C Charger", 75, 10.99, 150, 5, 1012));
         }
     }
 

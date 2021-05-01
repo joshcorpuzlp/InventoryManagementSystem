@@ -70,26 +70,6 @@ public class AddPartWindow implements Initializable {
         }
 
         try {
-            inventoryInput = Integer.parseInt(inventoryLevelField.getText());
-            if (inventoryLevelField.getText().equals("")) {
-                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
-            }
-            if (inventoryInput <= 0) {
-                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
-            }
-        }
-        catch (NumberFormatException ex) {
-            errorMessageContainer += "Inventory field: enter a positive whole number.\n";
-            isInputValid = false;
-
-        }
-        catch (myExceptions stockValidation) {
-            errorMessageContainer += stockValidation.getMessage();
-            isInputValid = false;
-
-        }
-
-        try {
             priceInput = Double.parseDouble(priceField.getText());
             if (priceField.getText().equals("")) {
                 throw new myExceptions("Price field: enter a value..\n");
@@ -127,6 +107,28 @@ public class AddPartWindow implements Initializable {
         }
         catch (myExceptions minMaxValidation) {
             errorMessageContainer += minMaxValidation.getMessage();
+            isInputValid = false;
+
+        }
+        try {
+            inventoryInput = Integer.parseInt(inventoryLevelField.getText());
+            if (inventoryLevelField.getText().equals("")) {
+                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
+            }
+            if (inventoryInput <= 0) {
+                throw new myExceptions("Inventory field: enter a number greater than 0.\n");
+            }
+            if (inventoryInput < minInventoryLevelInput || inventoryInput > maxInventoryLevelInput) {
+                throw new myExceptions("inventory field: value must be in between the max and min.\n");
+            }
+        }
+        catch (NumberFormatException ex) {
+            errorMessageContainer += "Inventory field: enter a positive whole number.\n";
+            isInputValid = false;
+
+        }
+        catch (myExceptions stockValidation) {
+            errorMessageContainer += stockValidation.getMessage();
             isInputValid = false;
 
         }

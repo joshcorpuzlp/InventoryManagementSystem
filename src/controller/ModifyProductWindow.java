@@ -97,26 +97,6 @@ public class ModifyProductWindow implements Initializable{
         }
 
         try {
-            productInventoryLevel = Integer.parseInt(inventoryLevelField.getText());
-            if (inventoryLevelField.getText().equals("")) {
-                throw new myExceptions("Inventory level: enter a number greater than 0.\n");
-            }
-            if (productInventoryLevel <= 0) {
-                throw new myExceptions("Inventory level: enter a number greater than 0.\n");
-            }
-        }
-        catch (NumberFormatException ex) {
-            errorMessageContainer += "Inventory level: enter a positive whole number.\n";
-            isInputValid = false;
-
-        }
-        catch (myExceptions stockValidation) {
-            errorMessageContainer += stockValidation.getMessage();
-            isInputValid = false;
-
-        }
-
-        try {
             productPriceInput = Double.parseDouble(productPriceField.getText());
             if (productPriceField.getText().equals("")) {
                 throw new myExceptions("Price field: enter a value..\n");
@@ -154,6 +134,29 @@ public class ModifyProductWindow implements Initializable{
         }
         catch (myExceptions minMaxValidation) {
             errorMessageContainer += minMaxValidation.getMessage();
+            isInputValid = false;
+
+        }
+
+        try {
+            productInventoryLevel = Integer.parseInt(inventoryLevelField.getText());
+            if (inventoryLevelField.getText().equals("")) {
+                throw new myExceptions("Inventory level: enter a number greater than 0.\n");
+            }
+            if (productInventoryLevel <= 0) {
+                throw new myExceptions("Inventory level: enter a number greater than 0.\n");
+            }
+            if (productInventoryLevel > maxInventoryLevelInput || productInventoryLevel < minInventoryLevelInput) {
+                throw new myExceptions("Inventory level: value must be between max and min.\n");
+            }
+        }
+        catch (NumberFormatException ex) {
+            errorMessageContainer += "Inventory level: enter a positive whole number.\n";
+            isInputValid = false;
+
+        }
+        catch (myExceptions stockValidation) {
+            errorMessageContainer += stockValidation.getMessage();
             isInputValid = false;
 
         }
