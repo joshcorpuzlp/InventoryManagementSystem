@@ -158,7 +158,6 @@ public class ModifyProductWindow implements Initializable{
         catch (myExceptions stockValidation) {
             errorMessageContainer += stockValidation.getMessage();
             isInputValid = false;
-
         }
 
         errorMessageLabel.setText(errorMessageContainer);
